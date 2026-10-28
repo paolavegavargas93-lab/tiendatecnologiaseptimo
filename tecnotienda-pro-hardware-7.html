@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TecnoTienda Pro | Hardware 7°</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#070714;--p1:#0d0d22;--p2:#131330;--ln:#26264d;--cy:#00e5ff;--mg:#ff2bd6;--vi:#9d6bff;--ok:#38f59a;--bad:#ff5470;--am:#ffd166;--tx:#ecebff;--mu:#a6a6d4;--r:14px}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 19px/1.45 'Rajdhani',system-ui,sans-serif;min-height:100vh;
+  background-image:linear-gradient(rgba(157,107,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(157,107,255,.05) 1px,transparent 1px);background-size:40px 40px;
+  padding-bottom:env(safe-area-inset-bottom,0px)}
+h1,h2,h3,h4{font-family:'Orbitron',sans-serif;font-weight:700;letter-spacing:.02em;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+button:disabled{cursor:default}
+:focus-visible{outline:3px solid var(--mg);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:18px 16px 60px}
+.btn{font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.04em;padding:.95em 1.4em;border-radius:10px;border:2px solid var(--cy);background:transparent;color:var(--cy);min-height:48px}
+.btn.pri{background:var(--cy);color:#04101a;box-shadow:0 0 18px rgba(0,229,255,.35)}
+.btn:disabled{opacity:.35}
+.btn:not(:disabled):hover{filter:brightness(1.15)}
+.link{background:none;border:0;color:var(--mu);font-weight:600;padding:8px 4px;text-decoration:underline;text-underline-offset:3px}
+.link:hover{color:var(--tx)}
+
+/* Ingreso */
+.login{max-width:560px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top,0px)) 18px 40px;text-align:center}
+.sign{width:100%;height:auto;display:block}
+.flick{animation:flick 1.6s steps(1) 1 both}
+@keyframes flick{0%{opacity:.1}8%{opacity:1}12%{opacity:.2}20%{opacity:1}26%{opacity:.4}30%,100%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.flick{animation:none}}
+.lead{color:var(--mu);font-size:1.12rem;margin:18px auto 22px;max-width:44ch}
+.login-card{background:var(--p1);border:1px solid var(--ln);border-radius:var(--r);padding:22px;text-align:left;display:grid;gap:14px}
+.login-card label{display:grid;gap:6px;font-weight:700}
+input{font:inherit;font-size:1.1rem;color:var(--tx);background:#090920;border:2px solid var(--ln);border-radius:10px;padding:12px 14px;min-height:50px;width:100%}
+input:focus{border-color:var(--cy);outline:none;box-shadow:0 0 0 3px rgba(0,229,255,.25)}
+.lmsg{margin:0;color:var(--am);min-height:1.4em;font-size:1rem}
+.pie{color:#6f6fa0;font-size:.88rem;margin-top:22px}
+
+/* Barra superior */
+.hud{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:calc(10px + env(safe-area-inset-top,0px)) 16px 10px;background:#0a0a1c;border-bottom:1px solid var(--ln)}
+.hud-marca{font-family:'Orbitron',sans-serif;font-weight:900;color:var(--cy);text-shadow:0 0 10px rgba(0,229,255,.6);font-size:.95rem;margin-right:auto}
+.hud-user{display:flex;flex-direction:column;line-height:1.1}
+.hud-user span{color:var(--mu);font-size:.85rem}
+.hud-coins{display:flex;align-items:center;gap:6px;font-family:'Orbitron',sans-serif;font-weight:700;color:var(--am)}
+.hud-coins svg{width:22px;height:22px}
+.save{font-size:.88rem;display:flex;align-items:center;gap:6px;color:var(--mu);font-weight:600}
+.save::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--ok);flex:none}
+.save.saving::before{background:var(--am)}
+.save.error{color:var(--bad)}.save.error::before{background:var(--bad)}
+.save.demo::before{background:var(--vi)}
+.icon-btn{background:var(--p2);border:1px solid var(--ln);border-radius:8px;padding:6px 12px;min-height:40px;font-weight:700}
+
+/* Mostrador y burbujas */
+.mostrador,.escena{display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:end;margin:10px 0 20px}
+.escena{grid-template-columns:160px 1fr;margin:20px 0}
+.ava{width:100%;height:auto;display:block}
+.burbuja{position:relative;background:var(--p2);border:2px solid var(--vi);border-radius:18px;padding:14px 20px}
+.burbuja::before{content:"";position:absolute;left:-12px;bottom:26px;border:10px solid transparent;border-right-color:var(--vi);border-left:0}
+.burbuja p{margin:.2em 0 .8em;font-size:1.14rem;max-width:64ch}
+.burbuja p:last-child{margin-bottom:.2em}
+.quien{font-weight:700;color:var(--mg);font-size:.95rem}
+@media(max-width:600px){.mostrador,.escena{grid-template-columns:78px 1fr;gap:12px}}
+.prog{display:flex;align-items:center;gap:12px;color:var(--mu);font-weight:600;margin-bottom:24px}
+.bar{flex:1;height:10px;background:#15153a;border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--vi),var(--cy))}
+
+/* Estantes (misiones) */
+.sec-t{font-size:1rem;color:var(--mu);margin:0 0 12px}
+.estantes{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.estante{display:grid;gap:6px;text-align:left;background:var(--p1);border:1px solid var(--ln);border-bottom:6px solid var(--vi);border-radius:12px 12px 6px 6px;padding:16px}
+.est-ico{width:64px;height:64px;color:var(--cy)}
+.est-ico svg{width:100%;height:100%}
+.est-n{font-size:.88rem;color:var(--mu);font-weight:700}
+.est-t{font-family:'Orbitron',sans-serif;font-weight:700;font-size:.95rem;line-height:1.25}
+.est-c{color:var(--mu);font-size:.98rem}
+.est-bar{height:6px;background:#15153a;border-radius:4px;overflow:hidden}
+.est-bar i{display:block;height:100%;background:var(--cy)}
+.est-l{font-size:.92rem;font-weight:700;color:var(--cy)}
+.estante.hecha{border-bottom-color:var(--ok)}
+.estante.hecha .est-l,.estante.hecha .est-ico{color:var(--ok)}
+.estante.hecha .est-bar i{background:var(--ok)}
+.estante.cerrada{opacity:.45}
+.estante.cerrada .est-ico,.estante.cerrada .est-l{color:var(--mu)}
+.estante.abierta:hover,.estante.hecha:hover{border-color:var(--cy)}
+
+/* Barra de misión */
+.mbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-bottom:12px}
+.mbar-t{display:flex;flex-direction:column;margin-right:auto}
+.mbar-t span{color:var(--mu);font-size:.88rem;font-weight:700}
+.mbar-t b{font-family:'Orbitron',sans-serif;font-size:1rem}
+.dots{display:flex;gap:6px}
+.dot{width:14px;height:14px;border-radius:50%;border:2px solid var(--ln)}
+.dot.cur{border-color:var(--cy);box-shadow:0 0 8px var(--cy)}
+.dot.ok{background:var(--ok);border-color:var(--ok)}
+.dot.mal{background:var(--bad);border-color:var(--bad)}
+
+/* Manual */
+.manual{background:var(--p1);border:1px solid var(--ln);border-left:6px solid var(--cy);border-radius:var(--r);padding:22px 24px}
+.man-head{display:flex;gap:16px;align-items:center;margin-bottom:10px}
+.man-ico{width:68px;height:68px;color:var(--cy);flex:none}
+.man-ico svg{width:100%;height:100%}
+.man-pag{color:var(--mu);font-size:.92rem;font-weight:700}
+.manual h2{font-size:1.2rem;color:var(--cy)}
+.manual p{font-size:1.17rem;max-width:66ch;margin:.6em 0}
+.fichas{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin:14px 0 0}
+.fichas div{background:var(--p2);border:1px solid var(--ln);border-radius:10px;padding:12px 14px}
+.fichas dt{font-family:'Orbitron',sans-serif;font-weight:700;color:var(--mg);font-size:.9rem;margin-bottom:4px}
+.fichas dd{margin:0;font-size:1.07rem}
+.acciones{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:12px;margin-top:18px}
+
+/* Retos */
+.reto-head{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:end;margin-bottom:16px}
+@media(max-width:600px){.reto-head{grid-template-columns:64px 1fr;gap:10px}}
+.zona{background:var(--p1);border:1px solid var(--ln);border-radius:var(--r);padding:18px}
+.ayuda{color:var(--mu);margin:0 0 12px;font-size:1.02rem}
+.ops{display:grid;gap:10px}
+.op{text-align:left;background:var(--p2);border:2px solid var(--ln);border-radius:12px;padding:14px 16px;font-size:1.13rem;font-weight:600;min-height:56px}
+.op:not(:disabled):hover{border-color:var(--vi)}
+.op.sel{border-color:var(--cy);box-shadow:0 0 0 3px rgba(0,229,255,.2)}
+.op.bien{border-color:var(--ok);background:rgba(56,245,154,.12)}
+.op.mal{border-color:var(--bad);background:rgba(255,84,112,.1);text-decoration:line-through;opacity:.7}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.col{display:grid;gap:10px;align-content:start}
+.mi{position:relative;text-align:left;background:var(--p2);border:2px solid var(--ln);border-radius:12px;padding:12px 12px 12px 48px;font-size:1.06rem;font-weight:600;min-height:56px}
+.mi .tag{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-family:'Orbitron',sans-serif;font-size:.75rem;border:2px solid var(--ln);color:var(--mu)}
+.mi.sel{border-color:var(--cy);box-shadow:0 0 0 3px rgba(0,229,255,.25)}
+.mi.par{border-color:var(--c)}
+.mi.par .tag{background:var(--c);border-color:var(--c);color:#06061a}
+.mi.bien{border-color:var(--ok)}
+.mi.bien .tag{background:var(--ok);border-color:var(--ok);color:#06061a}
+@media(max-width:560px){.mi{font-size:.98rem;padding-left:44px}.match{gap:8px}}
+.slots{list-style:none;padding:0;margin:0 0 16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.slot{width:100%;min-height:64px;display:flex;align-items:center;gap:10px;background:#0a0a1e;border:2px dashed var(--ln);border-radius:12px;padding:10px 12px;font-weight:700;font-size:1.06rem;text-align:left}
+.slot:not(.vacio){border-style:solid;border-color:var(--cy);background:var(--p2)}
+.slot.bien{border-color:var(--ok)}
+.sn{font-family:'Orbitron',sans-serif;font-size:.8rem;color:var(--mu)}
+.pool{display:flex;flex-wrap:wrap;gap:10px;min-height:56px}
+.chip{background:var(--p2);border:2px solid var(--vi);border-radius:999px;padding:10px 18px;font-weight:700;font-size:1.06rem;min-height:48px}
+.clasif{display:grid;gap:8px}
+.fila{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;background:var(--p2);border:2px solid transparent;border-radius:12px;padding:10px 12px}
+.fila-t{font-weight:700;font-size:1.1rem}
+.fila.bien{border-color:var(--ok)}
+.fila.mal{border-color:var(--bad)}
+.seg{display:flex;gap:6px}
+.seg button{background:#0a0a1e;border:2px solid var(--ln);border-radius:9px;padding:8px 14px;font-weight:700;min-height:44px}
+.seg button.sel{border-color:var(--cy);background:rgba(0,229,255,.15);color:var(--cy)}
+.fila.bien .seg button.sel{border-color:var(--ok);color:var(--ok);background:rgba(56,245,154,.12)}
+.num{display:flex;align-items:center;gap:12px;font-family:'Orbitron',sans-serif;font-weight:700;color:var(--mu)}
+.num input{max-width:200px;font-family:'Orbitron',sans-serif;font-size:1.5rem;text-align:center}
+input.bien{border-color:var(--ok)}
+input.mal{border-color:var(--bad)}
+
+/* Armar pedido */
+.build{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
+.grupo{border:0;padding:0;margin:0 0 14px;min-width:0}
+.grupo legend{font-family:'Orbitron',sans-serif;font-weight:700;color:var(--mg);font-size:.9rem;margin-bottom:8px;padding:0}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px}
+.pieza{display:grid;gap:2px;text-align:left;background:var(--p2);border:2px solid var(--ln);border-radius:10px;padding:10px 12px}
+.pieza b{font-size:1.06rem}
+.pieza small{color:var(--mu);font-size:.92rem}
+.pieza .precio{color:var(--am);font-weight:700}
+.pieza.sel{border-color:var(--cy);box-shadow:0 0 0 3px rgba(0,229,255,.2)}
+.resumen{background:#0a0a1e;border:2px solid var(--vi);border-radius:var(--r);padding:16px;position:sticky;top:80px}
+.resumen h3{font-size:.95rem;color:var(--vi);margin-bottom:10px}
+.resumen h4{font-size:.85rem;color:var(--mu);margin:14px 0 8px}
+.linea{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px dashed #22224a;font-size:1rem}
+.linea b{white-space:nowrap}
+.linea.total{font-size:1.15rem;color:var(--cy);border-bottom:2px solid var(--ln)}
+.linea.pasado{color:var(--bad)}
+.reqs{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.reqs li{padding-left:30px;position:relative}
+.reqs li::before{content:"?";position:absolute;left:0;top:1px;width:22px;height:22px;border-radius:50%;border:2px solid var(--ln);display:grid;place-items:center;font-size:.75rem;color:var(--mu)}
+.reqs li.ok::before{content:"✓";border-color:var(--ok);color:var(--ok)}
+.reqs li.no{color:var(--bad)}
+.reqs li.no::before{content:"✗";border-color:var(--bad);color:var(--bad)}
+@media(max-width:820px){.build{grid-template-columns:1fr}.resumen{position:static}}
+
+/* Retroalimentación */
+.fb{display:none;margin-top:14px;border-radius:12px;padding:14px 18px;font-size:1.1rem;border:2px solid}
+.fb.show{display:block}
+.fb.bien{border-color:var(--ok);background:rgba(56,245,154,.08)}
+.fb.mal{border-color:var(--bad);background:rgba(255,84,112,.08)}
+.fb.fin{border-color:var(--am);background:rgba(255,209,102,.08)}
+.fb.info{border-color:var(--vi);background:rgba(157,107,255,.08)}
+.fb b{font-family:'Orbitron',sans-serif;font-size:.88rem}
+.pista{color:var(--am)}
+.sol{display:block;margin:6px 0;color:var(--am);font-weight:700}
+.intentos{color:var(--mu);font-weight:600;margin-right:auto}
+
+/* Bloqueo por salir de la actividad */
+#bloqueo{position:fixed;inset:0;z-index:50;background:rgba(4,4,14,.95);display:grid;place-items:center;padding:20px}
+.bloq-card{max-width:520px;width:100%;background:var(--p1);border:2px solid var(--bad);border-radius:18px;padding:26px 22px;text-align:center;box-shadow:0 0 30px rgba(255,84,112,.35)}
+.bloq-ico{width:64px;height:64px;border-radius:50%;border:3px solid var(--bad);color:var(--bad);display:grid;place-items:center;margin:0 auto 12px;font-family:'Orbitron',sans-serif;font-weight:900;font-size:2rem}
+.bloq-card h2{color:var(--bad);font-size:1.15rem;margin-bottom:10px}
+.bloq-card p{font-size:1.12rem;margin:.5em 0}
+.bloq-card input{margin:12px 0 4px;text-align:center;font-family:'Orbitron',sans-serif}
+.bloq-msg{color:var(--am);min-height:1.4em}
+.hud-sal{font-weight:700;color:var(--mu);font-size:.9rem}
+.hud-sal.alerta{color:var(--bad)}
+.aviso{color:var(--am);font-weight:600;font-size:1.02rem !important}
+
+/* Tienda de notas */
+.lista-precios{margin-bottom:22px}
+.precios{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0}
+.precio-nota{background:var(--p1);border:2px solid var(--ln);border-radius:12px;padding:10px 6px;text-align:center;opacity:.5}
+.precio-nota b{display:block;font-family:'Orbitron',sans-serif;font-size:1.3rem;color:var(--tx)}
+.precio-nota span{font-size:.92rem;color:var(--am);font-weight:700}
+.precio-nota.alcanza{opacity:1;border-color:var(--cy)}
+.precio-nota.mejor{border-color:var(--mg);box-shadow:0 0 16px rgba(255,43,214,.45)}
+.precios-nota{color:var(--mu);margin:0;font-size:1.02rem}
+@media(max-width:520px){.precios{grid-template-columns:repeat(3,1fr)}}
+
+/* Cierre y certificado */
+.stats{display:flex;flex-wrap:wrap;gap:12px;margin:10px 0}
+.stat{background:var(--p1);border:1px solid var(--ln);border-radius:12px;padding:12px 16px;min-width:170px}
+.stat b{display:block;font-family:'Orbitron',sans-serif;font-size:1.4rem;color:var(--cy)}
+.stat span{color:var(--mu);font-size:.98rem}
+.cert{background:var(--p1);border:2px solid var(--vi);border-radius:20px;padding:28px 22px;text-align:center;max-width:780px;margin:10px auto}
+.cert h1{font-size:1.15rem;color:var(--mg)}
+.cert .nombre{font-family:'Orbitron',sans-serif;font-size:1.3rem;margin:14px 0 2px}
+.cert .nota{font-family:'Orbitron',sans-serif;font-weight:900;font-size:clamp(3.5rem,14vw,6rem);line-height:1;color:var(--cy);text-shadow:0 0 22px rgba(0,229,255,.6);margin:16px 0 6px}
+.cert .rango{font-family:'Orbitron',sans-serif;color:var(--am);font-size:1.05rem}
+.cert .stats{justify-content:center}
+.tabla-wrap{overflow-x:auto;margin-top:18px}
+.tabla{width:100%;border-collapse:collapse;text-align:left}
+.tabla th,.tabla td{padding:8px 10px;border-bottom:1px solid var(--ln)}
+.tabla th{color:var(--mu);font-weight:700}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+'use strict';
+/* =========================================================
+   CONFIGURACIÓN
+   Pega entre las comillas la URL /exec del Apps Script.
+   Si se deja vacía, el OVA funciona en modo demo:
+   usuario demo, contraseña 1234 (no guarda en la hoja).
+   El usuario demo funciona SIEMPRE, también con la hoja conectada,
+   para que la profe pueda revisar el OVA sin afectar resultados.
+   ========================================================= */
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBAVtUuC689W5nIWD4A6ljNFJnlrYz3keU8RlAuWZBmungcDvfyodnhH9XcslyEJjnVQ/exec';
+const PTS = [50000, 30000, 15000];   // salario (pesos) por resolver un reto en el 1.º, 2.º o 3.er intento
+
+/* ---------- Vigilancia: cambiar de pestaña, minimizar u otra ventana ---------- */
+const VIG = {
+  activa: true,          // false = desactiva toda la vigilancia
+  penalMonedas: 50000,   // pesos que se descuentan del salario por cada salida
+  segundosMinimos: 2,    // salidas más cortas que esto no cuentan
+  esperaSeg: 10,         // segundos que queda bloqueado al volver
+  maxSalidas: 5,         // con esta cantidad de salidas la actividad se bloquea
+  claveProfe: '7319'     // clave para desbloquear (cámbiala)
+};
+
+/* ---------- Utilidades ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money = n => '$' + Number(n).toLocaleString('es-CO');
+const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+function shuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+/* ---------- Íconos ---------- */
+const SV = 'viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+const ICON = {
+  torre:`<svg ${SV}><rect x="18" y="4" width="28" height="56" rx="4"/><line x1="24" y1="14" x2="40" y2="14"/><line x1="24" y1="20" x2="40" y2="20"/><circle cx="32" cy="42" r="6"/><circle cx="32" cy="42" r="2"/><line x1="24" y1="54" x2="28" y2="54"/></svg>`,
+  ram:`<svg ${SV}><rect x="4" y="20" width="56" height="20" rx="2"/><rect x="9" y="25" width="8" height="10"/><rect x="21" y="25" width="8" height="10"/><rect x="35" y="25" width="8" height="10"/><rect x="47" y="25" width="8" height="10"/><path d="M8 40v6M14 40v6M20 40v6M26 40v6M38 40v6M44 40v6M50 40v6M56 40v6"/></svg>`,
+  disco:`<svg ${SV}><rect x="10" y="6" width="44" height="52" rx="4"/><circle cx="32" cy="28" r="14"/><circle cx="32" cy="28" r="3"/><path d="M45 47L35 31"/><circle cx="16" cy="12" r="1.2"/><circle cx="48" cy="52" r="1.2"/></svg>`,
+  cpu:`<svg ${SV}><rect x="16" y="16" width="32" height="32" rx="3"/><rect x="24" y="24" width="16" height="16" rx="1"/><path d="M24 16V8M32 16V8M40 16V8M24 56v-8M32 56v-8M40 56v-8M16 24H8M16 32H8M16 40H8M56 24h-8M56 32h-8M56 40h-8"/></svg>`,
+  gpu:`<svg ${SV}><rect x="4" y="16" width="52" height="28" rx="3"/><circle cx="20" cy="30" r="8"/><circle cx="40" cy="30" r="8"/><path d="M20 23v14M13 30h14M40 23v14M33 30h14"/><path d="M60 12v36M10 44v6h22v-6"/></svg>`,
+  movil:`<svg ${SV}><rect x="18" y="4" width="28" height="56" rx="5"/><line x1="28" y1="10" x2="36" y2="10"/><rect x="25" y="21" width="14" height="14" rx="2"/><path d="M29 21v-3M35 21v-3M29 35v3M35 35v3M25 26h-3M25 31h-3M39 26h3M39 31h3"/><circle cx="32" cy="52" r="2"/></svg>`,
+  rayo:`<svg ${SV}><rect x="8" y="14" width="48" height="36" rx="4"/><path d="M35 20l-9 13h8l-5 12 11-15h-8l5-10z"/><path d="M14 22h5M14 42h5"/></svg>`,
+  caja:`<svg ${SV}><path d="M8 20l24-12 24 12v26L32 58 8 46z"/><path d="M8 20l24 12 24-12M32 32v26"/><path d="M20 14l24 12v8"/></svg>`,
+  perif:`<svg ${SV}><rect x="6" y="8" width="40" height="28" rx="3"/><path d="M20 44h12M26 36v8"/><rect x="6" y="48" width="34" height="10" rx="2"/><path d="M50 30c4 0 8 3 8 9v8c0 6-4 9-8 9s-8-3-8-9v-8c0-6 4-9 8-9zM50 30v9"/></svg>`
+};
+const COIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 6.5v11M15 9.5c-.6-1-1.7-1.5-3-1.5-1.7 0-3 .9-3 2s1.3 1.7 3 2 3 .9 3 2-1.3 2-3 2c-1.3 0-2.4-.5-3-1.5"/></svg>';
+
+/* ---------- Avatares ---------- */
+const PELO = {
+  corto:'M36 46c0-14 10-22 24-22s24 8 24 22c-5-6-12-9-24-9s-19 3-24 9z',
+  largo:'M34 48c0-16 11-26 26-26s26 10 26 26v30c-5-2-8-7-8-13V50c-4-6-10-9-18-9s-14 3-18 9v15c0 6-3 11-8 13z',
+  mono:'M36 46c0-14 10-22 24-22s24 8 24 22c-5-6-12-9-24-9s-19 3-24 9zM60 8a8 8 0 1 1 0 16a8 8 0 1 1 0-16z',
+  calvo:'M36 54c0-7 1-11 3-14l4 1c-1 3-2 7-2 13zM84 54c0-7-1-11-3-14l-4 1c1 3 2 7 2 13z',
+  crespo:'M37 46a8 8 0 0 1 5-14a9 9 0 0 1 12-9a9 9 0 0 1 12 0a9 9 0 0 1 12 9a8 8 0 0 1 5 14c-6-5-13-8-23-8s-17 3-23 8z'
+};
+let avaN = 0;
+function avatar(c){
+  const id = 'av' + (avaN++);
+  return `<svg class="ava" viewBox="0 0 120 120" aria-hidden="true"><defs><clipPath id="${id}"><circle cx="60" cy="60" r="56"/></clipPath></defs>
+  <circle cx="60" cy="60" r="57" fill="#12122e" stroke="${c.aura || '#9d6bff'}" stroke-width="3"/>
+  <g clip-path="url(#${id})"><path d="M18 122c3-24 20-36 42-36s39 12 42 36z" fill="${c.ropa}"/><rect x="53" y="68" width="14" height="16" fill="${c.piel}"/>
+  <circle cx="60" cy="50" r="23" fill="${c.piel}"/><path d="${PELO[c.estilo] || PELO.corto}" fill="${c.pelo}"/>
+  <circle cx="51" cy="51" r="3" fill="#1b1030"/><circle cx="69" cy="51" r="3" fill="#1b1030"/>
+  <path d="M52 61q8 6 16 0" stroke="#1b1030" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  ${c.gafas ? '<g fill="none" stroke="#1b1030" stroke-width="2"><circle cx="51" cy="51" r="6.5"/><circle cx="69" cy="51" r="6.5"/><path d="M57.5 51h5"/></g>' : ''}</g></svg>`;
+}
+const JEFA = {nombre:'Ingeniera Marcela', rol:'jefa del taller', piel:'#b9825a', pelo:'#1c1210', ropa:'#3b2a7a', estilo:'mono', gafas:true, aura:'#00e5ff'};
+
+/* ---------- Catálogo para armar pedidos (precios de referencia del juego, aproximados) ---------- */
+const CAT = {
+  cpu:[
+    {n:'Ryzen 5 5600G', d:'AM4, 6 núcleos / 12 hilos, con gráficos, 65 W', socket:'AM4', nuc:6, igpu:true, p:520000},
+    {n:'Core i5-14400F', d:'LGA1700, 10 núcleos / 16 hilos, SIN gráficos, 65 W', socket:'LGA1700', nuc:10, igpu:false, p:780000},
+    {n:'Ryzen 5 7600', d:'AM5, 6 núcleos / 12 hilos, gráficos básicos, 65 W', socket:'AM5', nuc:6, igpu:true, p:900000},
+    {n:'Core Ultra 7 265K', d:'LGA1851, 20 núcleos / 20 hilos, con gráficos, 125 W', socket:'LGA1851', nuc:20, igpu:true, p:1600000},
+    {n:'Ryzen 7 9800X3D', d:'AM5, 8 núcleos / 16 hilos, 96 MB de caché L3, 120 W', socket:'AM5', nuc:8, igpu:true, p:2300000}],
+  mb:[
+    {n:'B550', d:'Socket AM4, memoria DDR4', socket:'AM4', ram:'DDR4', p:450000},
+    {n:'B760', d:'Socket LGA1700, memoria DDR5', socket:'LGA1700', ram:'DDR5', p:650000},
+    {n:'B650', d:'Socket AM5, memoria DDR5', socket:'AM5', ram:'DDR5', p:700000},
+    {n:'Z890', d:'Socket LGA1851, memoria DDR5', socket:'LGA1851', ram:'DDR5', p:1200000}],
+  ram:[
+    {n:'16 GB DDR4-3200', d:'2 × 8 GB', tipo:'DDR4', gb:16, p:350000},
+    {n:'16 GB DDR5-6000', d:'2 × 8 GB', tipo:'DDR5', gb:16, p:550000},
+    {n:'32 GB DDR5-6000', d:'2 × 16 GB', tipo:'DDR5', gb:32, p:1000000},
+    {n:'64 GB DDR5-6000', d:'2 × 32 GB', tipo:'DDR5', gb:64, p:2000000}],
+  alm:[
+    {n:'HDD 2 TB', d:'Unos 200 MB/s', tipo:'HDD', gb:2000, p:300000},
+    {n:'SSD SATA 1 TB', d:'Unos 550 MB/s', tipo:'SATA', gb:1000, p:380000},
+    {n:'NVMe Gen4 1 TB', d:'Unos 7.000 MB/s', tipo:'NVMe', gb:1000, p:450000},
+    {n:'NVMe Gen4 2 TB', d:'Unos 7.000 MB/s', tipo:'NVMe', gb:2000, p:850000},
+    {n:'NVMe Gen5 2 TB', d:'Unos 14.000 MB/s', tipo:'NVMe', gb:2000, p:1400000}],
+  gpu:[
+    {n:'Sin tarjeta', d:'Usa los gráficos del procesador', vram:0, rec:0, p:0},
+    {n:'GeForce RTX 5060', d:'8 GB GDDR7, pide fuente de 550 W', vram:8, rec:550, p:1500000},
+    {n:'Intel Arc B580', d:'12 GB GDDR6, pide fuente de 600 W', vram:12, rec:600, p:1400000},
+    {n:'GeForce RTX 5070', d:'12 GB GDDR7, pide fuente de 650 W', vram:12, rec:650, p:2700000},
+    {n:'Radeon RX 9070 XT', d:'16 GB GDDR6, pide fuente de 750 W', vram:16, rec:750, p:3300000},
+    {n:'GeForce RTX 5080', d:'16 GB GDDR7, pide fuente de 850 W', vram:16, rec:850, p:5500000},
+    {n:'GeForce RTX 5090', d:'32 GB GDDR7, pide fuente de 1.000 W', vram:32, rec:1000, p:12000000}],
+  psu:[
+    {n:'550 W', d:'80 PLUS Bronze', w:550, p:250000},
+    {n:'650 W', d:'80 PLUS Bronze', w:650, p:320000},
+    {n:'750 W', d:'80 PLUS Gold', w:750, p:480000},
+    {n:'850 W', d:'80 PLUS Gold', w:850, p:600000},
+    {n:'1.000 W', d:'80 PLUS Gold', w:1000, p:850000}]
+};
+const GRUPOS_PC = [['cpu', 'Procesador'], ['mb', 'Placa madre'], ['ram', 'Memoria RAM'], ['alm', 'Almacenamiento'], ['gpu', 'Tarjeta gráfica'], ['psu', 'Fuente de poder']];
+const REQ_COMPAT = [
+  {t:'Procesador y placa con el mismo socket', f:s => s.cpu.socket === s.mb.socket},
+  {t:'RAM del tipo que acepta la placa', f:s => s.ram.tipo === s.mb.ram},
+  {t:'El equipo puede dar imagen (ojo con los procesadores F)', f:s => s.cpu.igpu || s.gpu.vram > 0},
+  {t:'Fuente igual o mayor a la que pide la tarjeta', f:s => s.psu.w >= s.gpu.rec}
+];
+
+/* =========================================================
+   CONTENIDO: misiones, manual y retos (7.°)
+   tipos: mcq | match | order | clasif | num | build
+   ========================================================= */
+const MIS = [
+{
+  titulo:'Fichas técnicas: procesadores de computador', icono:'cpu', cli:JEFA,
+  pedido:'Te doy la bienvenida al equipo de TecnoTienda Pro. Aquí no vendemos “computadores rápidos”: vendemos especificaciones. Antes de atender clientes tienes que leer una ficha técnica como un profesional: núcleos, hilos, caché, vatios y esos sufijos raros al final del nombre.',
+  gracias:'Ya lees una ficha técnica mejor que muchos vendedores. Ahora sí te dejo con los clientes.',
+  manual:[
+    {t:'Núcleos, hilos y frecuencia', fig:'cpu', p:[
+      'Los procesadores actuales mezclan dos tipos de núcleos: los <b>P</b> (de rendimiento), potentes para juegos y programas pesados, y los <b>E</b> (de eficiencia), que gastan poca energía en tareas de fondo. Un Intel Core i5-14400F tiene 6 núcleos P y 4 núcleos E.',
+      'Los <b>hilos</b> son las tareas que el procesador atiende al mismo tiempo. En el i5-14400F cada núcleo P maneja 2 hilos (Hyper-Threading) y cada núcleo E maneja 1. Ojo: los Intel Core Ultra 200S, como el Core Ultra 7 265K, ya no usan Hyper-Threading: 20 núcleos, 20 hilos.',
+      'La frecuencia en <b>GHz</b> tiene dos valores: la base (la que mantiene siempre) y la turbo (la máxima por ratos). El Ryzen 7 9800X3D llega a 5,2 GHz en turbo.']},
+    {t:'Caché, TDP, nanómetros y socket', fig:'cpu', fichas:[
+      ['Caché L3', 'Memoria ultrarrápida dentro del procesador. El Ryzen 7 9800X3D tiene 96 MB gracias a su caché 3D apilada; por eso rinde tanto en juegos.'],
+      ['TDP (vatios)', 'El calor que debe sacar el sistema de enfriamiento. Unos 65 W en un procesador de gama media; 120 a 125 W en uno de gama alta.'],
+      ['Nanómetros (nm)', 'Tamaño del proceso de fabricación. Entre más pequeño, más transistores caben y menos energía se gasta por operación.'],
+      ['Socket', 'El conector de la placa madre. Cada familia usa el suyo: AM4, AM5, LGA1700, LGA1851. Si no coincide, no se puede instalar.']]},
+    {t:'Los sufijos del nombre', fig:'cpu', p:['La última letra del nombre dice mucho. Estos son los que más vas a ver en la tienda:'], fichas:[
+      ['K (Intel)', 'Desbloqueado para overclock. Ejemplo: Core Ultra 9 285K.'],
+      ['F (Intel)', 'Sin gráficos integrados: necesita tarjeta de video sí o sí. Ejemplo: Core i5-14400F.'],
+      ['U y V (Intel)', 'Portátiles delgados de bajo consumo. Ejemplo: Core Ultra 7 258V.'],
+      ['HX (Intel y AMD)', 'Portátiles de alto rendimiento. Ejemplo: Ryzen AI 9 HX 370.'],
+      ['G (AMD)', 'Gráficos integrados más potentes. Ejemplo: Ryzen 5 5600G.'],
+      ['X3D (AMD)', 'Caché 3D extra, ideal para juegos. Ejemplo: Ryzen 7 9800X3D.'],
+      ['Apple M5', 'Chip de los MacBook y iPad: procesador, gráficos y memoria en un solo paquete.']]}
+  ],
+  retos:[
+    {tipo:'mcq', q:'Un cliente compró un Intel Core i5-14400F, lo instaló sin tarjeta de video y el monitor no muestra nada. ¿Qué pasó?',
+      ops:['La F indica que no tiene gráficos integrados: necesita una tarjeta de video','La F significa que viene defectuoso de fábrica','La F indica que es un procesador de portátil','Le falta memoria caché'], ok:0,
+      pista:'Revisa la página de los sufijos del manual.',
+      exp:'Los procesadores Intel terminados en F no traen gráficos integrados. Sin una tarjeta de video no hay por dónde sacar imagen.'},
+    {tipo:'match', q:'Relaciona cada sufijo con lo que significa.',
+      pares:[['K (Core Ultra 9 285K)','Desbloqueado para overclock'],['F (Core i5-14400F)','Sin gráficos integrados'],['V (Core Ultra 7 258V)','Portátil delgado de bajo consumo'],['X3D (Ryzen 7 9800X3D)','Caché 3D extra para juegos'],['G (Ryzen 5 5600G)','Gráficos integrados más potentes']],
+      pista:'F de “falta” el video; G de “gráficos”; X3D de caché en 3D.',
+      exp:'Leer el sufijo evita errores caros, como vender un procesador F a alguien que no va a comprar tarjeta de video.'},
+    {tipo:'num', q:'El Core i5-14400F tiene 6 núcleos P con Hyper-Threading (2 hilos cada uno) y 4 núcleos E (1 hilo cada uno). ¿Cuántos hilos tiene en total?', ok:16, unidad:'hilos',
+      pista:'Calcula por separado: 6 × 2 para los núcleos P, más 4 × 1 para los E.',
+      exp:'6 × 2 + 4 × 1 = 16 hilos. En la caja aparece como “10 núcleos / 16 hilos”.'},
+    {tipo:'mcq', q:'En pruebas de juegos, el Ryzen 7 9800X3D (8 núcleos) suele superar a procesadores con muchos más núcleos, como el Core Ultra 9 285K (24 núcleos). ¿Cuál es la razón principal?',
+      ops:['Su caché L3 de 96 MB reduce las esperas por datos de la RAM','Tiene más núcleos que cualquier otro procesador','Funciona sin necesidad de RAM','Los juegos no usan el procesador'], ok:0,
+      pista:'¿Qué tiene de especial la sigla X3D?',
+      exp:'Los juegos piden datos todo el tiempo. Con tanta caché, el procesador los tiene a la mano y no pierde tiempo esperando a la RAM.'},
+    {tipo:'clasif', q:'Organiza la vitrina: ¿cada procesador es de escritorio o de portátil?', cats:['Escritorio','Portátil'],
+      items:[['Core Ultra 9 285K',0],['Ryzen 7 9800X3D',0],['Core i5-14400F',0],['Core Ultra 7 258V',1],['Ryzen AI 9 HX 370',1],['Apple M5 (MacBook Pro)',1]],
+      pista:'Los sufijos V y HX son de portátil. El M5 viene en los MacBook.',
+      exp:'Los procesadores de portátil están diseñados para gastar menos energía y calentarse menos, porque van en un espacio mucho más pequeño.'}
+  ]
+},
+{
+  titulo:'Memoria RAM: generaciones y doble canal', icono:'ram',
+  cli:{nombre:'Santiago', rol:'arma su primer PC gamer', piel:'#c98d5f', pelo:'#1a1008', ropa:'#0f766e', estilo:'corto'},
+  pedido:'Compré una placa B650 para un Ryzen 5 7600 y quise ponerle las memorias DDR4 de mi computador viejo, pero no entran en la ranura. ¿Las estoy poniendo mal o qué pasa?',
+  gracias:'Ya entendí: DDR5, dos módulos y doble canal. ¡Mi PC quedó volando!',
+  manual:[
+    {t:'DDR4, DDR5 y LPDDR5X', fig:'ram', p:[
+      'Cada generación de RAM tiene la muesca en un lugar distinto, así que no se pueden mezclar: una placa DDR5 solo acepta DDR5.',
+      '<b>DDR4</b> se usa en plataformas como AM4 (Ryzen 5000). <b>DDR5</b> es obligatoria en AM5 (Ryzen 7000 y 9000) y en LGA1851 (Intel Core Ultra 200S).',
+      '<b>LPDDR5X</b> es la versión de bajo consumo que va soldada en celulares y portátiles delgados: no se puede ampliar después.']},
+    {t:'Velocidad y doble canal', fig:'ram', p:[
+      'La velocidad se mide en <b>MT/s</b> (millones de transferencias por segundo): DDR4-3200 hace 3.200 MT/s y DDR5-6000 hace 6.000 MT/s.',
+      'Cada canal mueve 8 bytes por transferencia. <b>Ancho de banda = MT/s × 8 bytes × número de canales.</b>',
+      'Con dos módulos iguales se activa el <b>doble canal</b> y el ancho de banda se duplica. Por eso 2 × 8 GB rinde más que 1 × 16 GB.']},
+    {t:'¿Cuánta RAM se recomienda hoy?', fig:'ram', fichas:[
+      ['8 GB', 'Se queda corta incluso para navegar con muchas pestañas.'],
+      ['16 GB', 'Estudio, programas de oficina y juegos a 1080p.'],
+      ['32 GB', 'Jugar mientras transmites, edición de video, programación.'],
+      ['64 GB o más', 'Edición 8K, 3D profesional, inteligencia artificial local.']],
+      p:['Dato de mercado: entre 2025 y 2026 los precios de la RAM subieron mucho porque los centros de datos de inteligencia artificial compran enormes cantidades de memoria.']}
+  ],
+  retos:[
+    {tipo:'mcq', q:'Santiago pregunta: “¿Mis memorias DDR4 sí sirven en la placa B650 si empujo más duro?”',
+      ops:['No: AM5 solo acepta DDR5 y la muesca de la DDR4 está en otro lugar','Sí, solo hay que empujar con más fuerza','Sí, pero primero hay que actualizar Windows','No, porque la placa está dañada'], ok:0,
+      pista:'¿Qué tipo de memoria exige la plataforma AM5?',
+      exp:'Forzarlas podría dañar la placa. La muesca está justamente para impedir que se instale una generación equivocada.'},
+    {tipo:'mcq', q:'Santiago puede comprar 16 GB DDR5-6000 en un solo módulo de 16 GB o en dos módulos de 8 GB. ¿Qué le recomiendas?',
+      ops:['Dos de 8 GB, para activar el doble canal','Uno de 16 GB, porque un módulo es más rápido que dos','Da igual, el ancho de banda es el mismo','Mejor 16 GB de DDR4, que es más moderna'], ok:0,
+      pista:'Revisa qué pasa cuando hay dos módulos iguales.',
+      exp:'Con dos módulos el procesador usa dos canales al tiempo y el ancho de banda se duplica.'},
+    {tipo:'num', q:'¿Cuál es el ancho de banda teórico de dos módulos DDR5-6000 en doble canal? Usa la fórmula del manual (1.000 MB = 1 GB).', ok:96, unidad:'GB/s',
+      pista:'6.000 × 8 = 48.000 MB/s por canal. Ahora multiplica por 2 canales y pásalo a GB.',
+      exp:'6.000 × 8 × 2 = 96.000 MB/s = 96 GB/s. Con un solo módulo serían 48 GB/s.'},
+    {tipo:'mcq', q:'Verdadero o falso: la RAM LPDDR5X de un celular o de un portátil delgado normalmente va soldada y no se puede ampliar.', ops:['Verdadero','Falso'], ok:0,
+      pista:'¿Para qué tipo de equipos se diseñó la versión LP (de bajo consumo)?',
+      exp:'Verdadero. Por eso, al comprar un portátil delgado o un celular, hay que elegir bien la RAM desde el principio.'},
+    {tipo:'order', q:'Ordena estas memorias de la más lenta a la más rápida.', items:['DDR4-2666','DDR4-3200','DDR5-4800','DDR5-6000'],
+      pista:'El número final son los MT/s.',
+      exp:'2.666 < 3.200 < 4.800 < 6.000 MT/s. Para AM5, la DDR5-6000 es la combinación más recomendada.'}
+  ]
+},
+{
+  titulo:'Almacenamiento y velocidad de transferencia', icono:'disco',
+  cli:{nombre:'Felipe', rol:'fotógrafo de eventos', piel:'#e3b088', pelo:'#5a3a22', ropa:'#334155', estilo:'corto', gafas:true},
+  pedido:'Después de cada boda me quedan 70 GB de fotos RAW. Copiarlas me toma una eternidad y, para colmo, compré un disco de 1 TB y Windows dice que tiene 931 GB. ¿Me robaron?',
+  gracias:'¡Nadie me robó! Y ahora copio las fotos en segundos. Gracias.',
+  manual:[
+    {t:'De HDD a NVMe Gen5', fig:'disco', fichas:[
+      ['HDD', 'Disco con platos que giran. Unos 200 MB/s. Barato para guardar mucho.'],
+      ['SSD SATA', 'Unos 550 MB/s. Ejemplo: Samsung 870 EVO.'],
+      ['NVMe PCIe 4.0', 'Unos 7.000 MB/s. Ejemplo: Samsung 990 Pro.'],
+      ['NVMe PCIe 5.0', 'Unos 14.000 MB/s. Ejemplo: Samsung 9100 Pro.']],
+      p:['Son velocidades máximas de lectura en el mejor caso; en el uso real varían.']},
+    {t:'M.2 es una forma, no una velocidad', fig:'disco', p:[
+      '<b>M.2</b> es el formato de la tarjetica que se atornilla en la placa. Hay SSD M.2 que funcionan por SATA (unos 550 MB/s) y otros por NVMe (miles de MB/s). Hay que leer la interfaz, no solo la forma.',
+      'En celulares el almacenamiento va soldado: <b>eMMC</b> (lento, gama de entrada), <b>UFS 2.2</b>, <b>UFS 3.1</b> y <b>UFS 4.0</b> (más de 4.000 MB/s en gama alta).']},
+    {t:'Bits, bytes y el terabyte que se encoge', fig:'disco', p:[
+      '<b>1 byte = 8 bits.</b> Las velocidades de internet se dan en megabits por segundo (Mbps). Para pasarlas a megabytes por segundo (MB/s) se divide entre 8.',
+      'Los fabricantes cuentan 1 TB = 1.000.000.000.000 bytes, pero Windows divide entre 1.024 tres veces (1.024³ = 1.073.741.824). Por eso un disco de 1 TB aparece como unos 931 GB: no falta espacio, es otra forma de contar.']}
+  ],
+  retos:[
+    {tipo:'order', q:'Ordena estas unidades de la más lenta a la más rápida.', items:['Disco duro HDD','SSD SATA','SSD NVMe PCIe 4.0','SSD NVMe PCIe 5.0'],
+      pista:'Platos que giran, luego SATA, luego NVMe por generaciones.',
+      exp:'Unos 200, 550, 7.000 y 14.000 MB/s. Del HDD al NVMe Gen5 hay unas 70 veces de diferencia.'},
+    {tipo:'num', q:'Felipe copia 70 GB de fotos a un SSD NVMe que escribe a 7.000 MB/s. En el mejor caso, ¿cuántos segundos tarda? (1 GB = 1.000 MB)', ok:10, unidad:'segundos',
+      pista:'Pasa 70 GB a MB y divide entre la velocidad.',
+      exp:'70.000 MB ÷ 7.000 MB/s = 10 segundos. En un HDD de 200 MB/s serían 350 segundos, casi 6 minutos.'},
+    {tipo:'num', q:'Un disco de 1 TB tiene 1.000.000.000.000 bytes. Windows divide entre 1.073.741.824 (1.024³). ¿Cuántos GB muestra aproximadamente? Redondea al entero.', ok:931, tol:1, unidad:'GB',
+      pista:'Divide 1.000.000.000.000 entre 1.073.741.824. Puedes usar la calculadora.',
+      exp:'Da 931,3. Por eso un disco de 1 TB aparece con 931 GB en Windows.'},
+    {tipo:'num', q:'Felipe tiene internet de 300 Mbps. ¿A cuántos MB/s descarga como máximo?', ok:37.5, tol:0.05, unidad:'MB/s',
+      pista:'Megabits a megabytes: divide entre 8.',
+      exp:'300 ÷ 8 = 37,5 MB/s. Por eso un archivo de 1 GB tarda unos 27 segundos aunque el plan diga “300 megas”.'},
+    {tipo:'mcq', q:'Un cliente compró un SSD M.2 pensando que iba a 7.000 MB/s, pero le da unos 550 MB/s. ¿Qué pasó?',
+      ops:['Es un M.2 SATA: M.2 es la forma, la velocidad depende de la interfaz','El disco está dañado','Le falta formatearlo','Los M.2 solo funcionan en portátiles'], ok:0,
+      pista:'Repasa la página “M.2 es una forma, no una velocidad”.',
+      exp:'Hay que revisar que diga NVMe (y la generación PCIe), no solo M.2.'}
+  ]
+},
+{
+  titulo:'Tarjetas gráficas reales', icono:'gpu',
+  cli:{nombre:'Camila', rol:'streamer de videojuegos', piel:'#9a6440', pelo:'#2b1b12', ropa:'#be185d', estilo:'largo'},
+  pedido:'Transmito mis partidas y quiero pasar de 1080p a 1440p. Veo nombres como RTX 5070, RX 9070 XT, Arc B580… y no sé cuál necesito ni si mi fuente de poder aguanta.',
+  gracias:'Ya sé qué tarjeta necesito, cuánta VRAM y qué fuente comprar. ¡A transmitir!',
+  manual:[
+    {t:'Las tarjetas que vendemos', fig:'gpu', fichas:[
+      ['GeForce RTX 5060', '8 GB GDDR7. Juegos a 1080p.'],
+      ['Intel Arc B580', '12 GB GDDR6. Opción económica para 1080p.'],
+      ['GeForce RTX 5070', '12 GB GDDR7. Juegos a 1440p.'],
+      ['Radeon RX 9070 XT', '16 GB GDDR6. 1440p en calidad alta.'],
+      ['GeForce RTX 5080', '16 GB GDDR7. 1440p extremo y 4K.'],
+      ['GeForce RTX 5090', '32 GB GDDR7. 4K extremo e inteligencia artificial. Consume hasta 575 W.']]},
+    {t:'Resolución, VRAM y FPS', fig:'gpu', p:[
+      'Resolución = píxeles en pantalla: <b>1080p</b> (1920 × 1080), <b>1440p</b> (2560 × 1440) y <b>4K</b> (3840 × 2160). Más píxeles significa más trabajo y más VRAM.',
+      'Hoy, 8 GB de VRAM es lo mínimo para 1080p; para 1440p se recomiendan 12 a 16 GB, y para 4K, 16 GB o más.',
+      'Los FPS se pueden convertir en tiempo por cuadro: <b>1.000 ms ÷ FPS</b>. A 30 FPS cada imagen dura unos 33,3 ms.']},
+    {t:'Escalado con IA y energía', fig:'gpu', p:[
+      '<b>DLSS</b> (NVIDIA), <b>FSR</b> (AMD) y <b>XeSS</b> (Intel) dibujan el juego a menor resolución y lo reconstruyen con inteligencia artificial: más FPS con casi la misma calidad. La generación de cuadros, además, crea imágenes intermedias.',
+      'Cada tarjeta indica su consumo y la fuente recomendada por el fabricante: RTX 5060, 550 W; RTX 5070, 650 W; RTX 5090, 1.000 W.']}
+  ],
+  retos:[
+    {tipo:'match', q:'Recomienda una tarjeta para cada necesidad.',
+      pares:[['GeForce RTX 5060 (8 GB)','Juegos a 1080p'],['Radeon RX 9070 XT (16 GB)','Juegos a 1440p en calidad alta'],['GeForce RTX 5090 (32 GB)','4K extremo e inteligencia artificial'],['Gráficos integrados del Ryzen 5 5600G','Oficina y juegos ligeros']],
+      pista:'Entre más resolución, más VRAM y más potencia.',
+      exp:'La tarjeta se elige por resolución y uso: vender una RTX 5090 para oficina es desperdiciar dinero y energía.'},
+    {tipo:'num', q:'Una imagen 4K tiene 3840 × 2160 píxeles y una 1080p tiene 1920 × 1080. ¿Cuántas veces más píxeles tiene la 4K?', ok:4, unidad:'veces',
+      pista:'Calcula los dos productos y divide. O fíjate: cada lado se duplica.',
+      exp:'8.294.400 ÷ 2.073.600 = 4. Por eso jugar en 4K exige tanto más a la tarjeta.'},
+    {tipo:'mcq', q:'Camila pregunta: “¿Qué hace exactamente el DLSS o el FSR?”',
+      ops:['Dibuja el juego a menor resolución y lo reconstruye con IA para ganar FPS','Aumenta la VRAM de la tarjeta','Enfría la tarjeta gráfica','Mejora la velocidad del internet en las transmisiones'], ok:0,
+      pista:'Revisa la página “Escalado con IA y energía”.',
+      exp:'Es como pintar un boceto más pequeño y que una IA lo amplíe con detalle: menos trabajo, más cuadros por segundo.'},
+    {tipo:'num', q:'Si un juego corre a 60 FPS, ¿cuántos milisegundos dura cada cuadro? Responde con un decimal.', ok:16.7, tol:0.1, unidad:'ms',
+      pista:'Usa la fórmula: 1.000 ms ÷ FPS.',
+      exp:'1.000 ÷ 60 ≈ 16,7 ms. A 144 FPS serían unos 6,9 ms: por eso se siente tan fluido.'},
+    {tipo:'mcq', q:'Un cliente quiere instalar una GeForce RTX 5090 (hasta 575 W). ¿Qué fuente recomienda el fabricante como mínimo?',
+      ops:['1.000 W','450 W','650 W','La misma fuente que traía su PC de oficina'], ok:0,
+      pista:'Está en la última página del manual de esta misión.',
+      exp:'Con una fuente pequeña, el equipo se apagaría en los picos de consumo o la fuente podría dañarse.'}
+  ]
+},
+{
+  titulo:'Celulares por dentro', icono:'movil',
+  cli:{nombre:'Valeria', rol:'tiene 15 años y quiere celular nuevo', piel:'#e8b48c', pelo:'#3b2314', ropa:'#7c3aed', estilo:'mono'},
+  pedido:'Quiero cambiar de celular. Unos dicen Snapdragon, otros MediaTek, otros Apple… y todos dicen “octa core”. ¿Cómo sé cuál es bueno de verdad y cuál me conviene?',
+  gracias:'Ahora sí entiendo una ficha de celular. ¡Ya sé cuál comprar!',
+  manual:[
+    {t:'El SoC: todo en un chip', fig:'movil', p:[
+      'Un celular no tiene piezas separadas como un PC: usa un <b>SoC</b> (sistema en un chip) que junta CPU, GPU, <b>NPU</b> (para inteligencia artificial), módem y procesador de imagen de la cámara.',
+      'Los celulares también mezclan núcleos de distintos tamaños. El Snapdragon 8 Elite Gen 6 tiene 2 núcleos “prime” de hasta 5,0 GHz y 6 de rendimiento de hasta 4,0 GHz: es el primer chip de celular que llega a 5 GHz.']},
+    {t:'Chips reales de 2025 y 2026', fig:'movil', fichas:[
+      ['Apple A20 Pro (2026)', 'iPhone 18 Pro. 2 nm, CPU de 6 núcleos, GPU de 7 núcleos, Neural Engine de 32 núcleos.'],
+      ['Snapdragon 8 Elite Gen 6 (2026)', '2 nm, 8 núcleos, hasta 5,0 GHz. Gama alta Android.'],
+      ['Apple A19 Pro (2025)', 'iPhone 17 Pro. 3 nm, CPU de 6 núcleos, GPU de 6 núcleos.'],
+      ['MediaTek Dimensity 9500 (2025)', '3 nm, 8 núcleos, hasta 4,21 GHz. Gama alta Android.'],
+      ['Google Tensor G5 (2025)', 'Pixel 10. 3 nm, el primer Tensor fabricado por TSMC.'],
+      ['MediaTek Helio G99', '6 nm, 8 núcleos hasta 2,2 GHz. Muy común en gama de entrada y media.'],
+      ['Snapdragon 685', '6 nm, 8 núcleos hasta 2,8 GHz. Gama de entrada y media.'],
+      ['MediaTek Helio G85', '12 nm, 8 núcleos hasta 2,0 GHz. Celulares económicos.']]},
+    {t:'Más allá del procesador', fig:'movil', fichas:[
+      ['RAM', 'LPDDR5X en gama alta, de 8 a 16 GB. Va soldada.'],
+      ['Almacenamiento', 'UFS 4.0 en gama alta; UFS 2.2 o eMMC en gama de entrada.'],
+      ['Batería', 'Los mAh indican la capacidad. Horas de uso ≈ mAh ÷ consumo promedio en mA.'],
+      ['Carga', 'Se mide en vatios: 25 W, 45 W, 120 W. Más vatios, carga más rápida.'],
+      ['Pantalla', 'OLED (negros perfectos) o LCD. Frecuencia de 60, 90, 120 o 144 Hz.']]}
+  ],
+  retos:[
+    {tipo:'clasif', q:'Clasifica estos chips de celular según su gama.', cats:['Gama alta','Gama de entrada o media'],
+      items:[['Snapdragon 8 Elite Gen 6',0],['Apple A20 Pro',0],['MediaTek Dimensity 9500',0],['MediaTek Helio G85',1],['MediaTek Helio G99',1],['Snapdragon 685',1]],
+      pista:'Los de gama alta se fabrican en 2 o 3 nm; los Helio usan procesos más grandes.',
+      exp:'“Octa core” no dice nada por sí solo: un Helio G85 y un Snapdragon 8 Elite Gen 6 tienen 8 núcleos, pero son mundos distintos.'},
+    {tipo:'order', q:'Ordena estos chips del proceso de fabricación más grande (más antiguo) al más pequeño.', items:['MediaTek Helio G85','MediaTek Helio G99','Apple A19 Pro','Snapdragon 8 Elite Gen 6'],
+      pista:'Busca los nanómetros de cada uno en la segunda página del manual.',
+      exp:'12 nm, 6 nm, 3 nm y 2 nm. En 2026 llegaron los primeros chips de celular de 2 nm.'},
+    {tipo:'mcq', q:'¿Qué ventaja tiene que un chip se fabrique en 2 nm en lugar de 12 nm?',
+      ops:['Caben más transistores en el mismo espacio y gasta menos energía','El celular queda más grueso','La pantalla se ve más grande','Solo cambia el precio, no el rendimiento'], ok:0,
+      pista:'Piensa en qué pasa cuando los transistores son más pequeños.',
+      exp:'Transistores más pequeños: más potencia en el mismo espacio, menos calor y más batería.'},
+    {tipo:'num', q:'Un celular tiene una batería de 5.000 mAh y, jugando, consume en promedio 625 mA. ¿Cuántas horas dura jugando?', ok:8, unidad:'horas',
+      pista:'Horas ≈ mAh ÷ mA.',
+      exp:'5.000 ÷ 625 = 8 horas. Si baja el brillo o la frecuencia de pantalla, el consumo baja y dura más.'},
+    {tipo:'mcq', q:'Valeria juega Free Fire, toma muchas fotos y no quiere quedarse sin espacio. Su presupuesto es medio. ¿Qué ficha le recomiendas?',
+      ops:['Helio G99, 8 GB de RAM, 256 GB UFS 2.2, 5.000 mAh, pantalla de 90 Hz','Helio G85, 4 GB de RAM, 64 GB eMMC, 5.000 mAh','Snapdragon 8 Elite Gen 6, 16 GB, 1 TB UFS 4.0 (cuesta el triple de su presupuesto)','Helio G85, 3 GB de RAM, 32 GB eMMC'], ok:0,
+      pista:'Busca equilibrio: buena RAM y espacio, sin pasarte del presupuesto.',
+      exp:'El Helio G99 mueve bien ese juego, 8 GB de RAM alcanzan y 256 GB le dan espacio para fotos. El Snapdragon es excelente, pero está fuera de su presupuesto.'}
+  ]
+},
+{
+  titulo:'Compatibilidad y energía', icono:'rayo',
+  cli:{nombre:'Óscar', rol:'compró su PC por partes', piel:'#b07a50', pelo:'#141010', ropa:'#1d4ed8', estilo:'crespo'},
+  pedido:'Compré las piezas por internet para ahorrar, pero no sé si todo es compatible ni qué fuente de poder necesito. No quiero que se me queme nada.',
+  gracias:'Todo encajó a la primera y la fuente aguanta de sobra. ¡Gracias por revisar!',
+  manual:[
+    {t:'Socket y plataforma', fig:'rayo', fichas:[
+      ['AM4', 'Ryzen 5000 (ej. Ryzen 5 5600G). Memoria DDR4.'],
+      ['AM5', 'Ryzen 7000 y 9000 (ej. Ryzen 7 9800X3D). Solo DDR5.'],
+      ['LGA1700', 'Intel Core de 12.ª a 14.ª generación (ej. Core i5-14400F). DDR4 o DDR5, según la placa.'],
+      ['LGA1851', 'Intel Core Ultra 200S (ej. Core Ultra 7 265K). Solo DDR5.']]},
+    {t:'¿Cuánta fuente de poder?', fig:'rayo', p:[
+      'Suma el consumo del procesador (TDP) y el de la tarjeta gráfica, agrega unos <b>80 W</b> para placa, RAM, discos y ventiladores, y luego un <b>margen de 30 a 40 %</b> para los picos y para que la fuente trabaje sin forzarse.',
+      'La certificación <b>80 PLUS</b> (Bronze, Gold, Platinum) indica eficiencia: cuánta energía se desperdicia como calor.']},
+    {t:'El cuello de botella', fig:'rayo', p:[
+      'Un computador va tan rápido como su pieza más lenta para cada tarea. Si pones una RTX 5090 con un procesador viejo de 4 núcleos, la tarjeta pasa gran parte del tiempo esperando: el procesador es el <b>cuello de botella</b>.',
+      'Un buen técnico equilibra las piezas según el uso y el presupuesto, en lugar de gastar todo en una sola.']}
+  ],
+  retos:[
+    {tipo:'match', q:'Relaciona cada procesador con su socket.',
+      pares:[['Ryzen 5 5600G','AM4'],['Ryzen 7 9800X3D','AM5'],['Core i5-14400F','LGA1700'],['Core Ultra 7 265K','LGA1851']],
+      pista:'Ryzen 5000 → AM4; Ryzen 7000 y 9000 → AM5; Intel de 12.ª a 14.ª gen → LGA1700; Core Ultra 200S → LGA1851.',
+      exp:'El socket es lo primero que se revisa: si no coincide, el procesador ni siquiera entra en la placa.'},
+    {tipo:'num', q:'Óscar tiene un Ryzen 7 9800X3D (120 W) y una RTX 5070 (250 W). Suma 80 W para el resto del equipo y agrega un 40 % de margen. ¿Cuántos vatios debería tener su fuente como mínimo?', ok:630, unidad:'W',
+      pista:'120 + 250 + 80 = 450. Ahora calcula 450 × 1,4.',
+      exp:'450 × 1,4 = 630 W. Como no se venden fuentes de 630 W, se elige la siguiente: 650 W, justo lo que recomienda NVIDIA para la RTX 5070.'},
+    {tipo:'mcq', q:'Verdadero o falso: un Core Ultra 7 265K se puede instalar en una placa LGA1700.', ops:['Verdadero','Falso'], ok:1,
+      pista:'¿Qué socket usan los Core Ultra 200S?',
+      exp:'Falso. El 265K usa LGA1851. Las placas LGA1700 son para Intel de 12.ª a 14.ª generación.'},
+    {tipo:'mcq', q:'Un cliente quiere poner una RTX 5090 en su computador, que tiene un procesador de 4 núcleos de hace 8 años y una fuente de 500 W. ¿Qué le adviertes?',
+      ops:['El procesador va a frenar a la tarjeta (cuello de botella) y la fuente no alcanza','Va a funcionar el doble de rápido que cualquier PC nuevo','La tarjeta hará que el procesador viejo se vuelva más rápido','No pasa nada, en los juegos el procesador no importa'], ok:0,
+      pista:'Hay dos problemas: uno de equilibrio y otro de energía.',
+      exp:'Sería gastar 12 millones para que la tarjeta trabaje a medias, y además la fuente se quedaría muy corta.'},
+    {tipo:'mcq', q:'¿Qué indica que una fuente de poder sea 80 PLUS Gold?',
+      ops:['Que es eficiente: desperdicia poca energía como calor','Que entrega exactamente 80 W','Que tiene piezas de oro y hace el PC más rápido','Que solo sirve para tarjetas NVIDIA'], ok:0,
+      pista:'Revisa la página “¿Cuánta fuente de poder?”.',
+      exp:'Una fuente eficiente se calienta menos, hace menos ruido y gasta menos energía en la factura de la luz.'}
+  ]
+},
+{
+  titulo:'Proyecto final: cotizaciones reales', icono:'caja', cli:JEFA,
+  pedido:'Llegaron dos cotizaciones grandes. Esta vez nadie te va a decir qué es compatible: tú eliges procesador, placa, RAM, almacenamiento, tarjeta y fuente. Cumple lo que pide cada cliente, que todo encaje y no te pases del presupuesto.',
+  gracias:'Dos cotizaciones compatibles, bien equilibradas y dentro del presupuesto. Ya eres especialista de TecnoTienda Pro.',
+  manual:[
+    {t:'Cómo cotiza un técnico profesional', fig:'caja', p:[
+      '1. Escucha para qué va a usar el computador y cuánto puede pagar.',
+      '2. Elige primero el procesador y una placa con el <b>mismo socket</b>.',
+      '3. Escoge la RAM del <b>tipo que acepta la placa</b> y la capacidad que pide el uso.',
+      '4. Elige almacenamiento y tarjeta gráfica, y al final una fuente igual o mayor a la que pide la tarjeta.',
+      'Toda cotización incluye la torre con ventiladores por <b>$300.000</b>. Los precios del catálogo son aproximados, de referencia para el ejercicio.']},
+    {t:'Lista de chequeo de compatibilidad', fig:'caja', fichas:[
+      ['Socket', 'Procesador y placa iguales: AM4, AM5, LGA1700 o LGA1851.'],
+      ['RAM', 'DDR4 o DDR5, según la placa.'],
+      ['Imagen', 'Si el procesador es F, la tarjeta de video es obligatoria.'],
+      ['Fuente', 'Igual o mayor a la que recomienda la tarjeta.'],
+      ['Presupuesto', 'El total no puede pasar del dinero del cliente.']]}
+  ],
+  retos:[
+    {tipo:'build', grupos:GRUPOS_PC, base:300000, baseTxt:'Torre con ventiladores',
+      cli:{nombre:'Andrés', rol:'gamer y streamer', piel:'#c7915f', pelo:'#22150c', ropa:'#9333ea', estilo:'crespo'},
+      q:'Cotización de Andrés: “Quiero jugar a 1080p en calidad alta mientras transmito. Necesito que cargue rápido. Tengo $5.000.000.”',
+      presupuesto:5000000,
+      reqs:REQ_COMPAT.concat([
+        {t:'Tarjeta dedicada con 8 GB de VRAM o más', f:s => s.gpu.vram >= 8},
+        {t:'Mínimo 16 GB de RAM', f:s => s.ram.gb >= 16},
+        {t:'SSD NVMe para que cargue rápido', f:s => s.alm.tipo === 'NVMe'},
+        {t:'No pasarse de $5.000.000', f:s => s.total <= 5000000}]),
+      solSel:{cpu:1, mb:1, ram:1, alm:2, gpu:1, psu:0},
+      sol:'Core i5-14400F + placa B760 + 16 GB DDR5-6000 + NVMe Gen4 1 TB + RTX 5060 + fuente de 550 W: $4.480.000. También funciona con Ryzen 5 7600 + B650.',
+      pista:'Empieza por el socket. Con una RTX 5070 y todo lo demás te pasas del presupuesto: la RTX 5060 es suficiente para 1080p.',
+      exp:'La clave fue equilibrar: un procesador de 10 núcleos para jugar y transmitir, y una tarjeta adecuada para 1080p, sin gastar de más.'},
+    {tipo:'build', grupos:GRUPOS_PC, base:300000, baseTxt:'Torre con ventiladores',
+      cli:{nombre:'Daniela', rol:'editora de video 4K', piel:'#e6b590', pelo:'#6b2f1a', ropa:'#0e7490', estilo:'largo', gafas:true},
+      q:'Cotización de Daniela: “Edito videos en 4K con muchas capas y efectos. Necesito mucho espacio rápido para los proyectos. Tengo $10.000.000.”',
+      presupuesto:10000000,
+      reqs:REQ_COMPAT.concat([
+        {t:'Mínimo 32 GB de RAM', f:s => s.ram.gb >= 32},
+        {t:'Procesador de 8 núcleos o más', f:s => s.cpu.nuc >= 8},
+        {t:'SSD NVMe de 2 TB o más', f:s => s.alm.tipo === 'NVMe' && s.alm.gb >= 2000},
+        {t:'Tarjeta dedicada con 12 GB de VRAM o más', f:s => s.gpu.vram >= 12},
+        {t:'No pasarse de $10.000.000', f:s => s.total <= 10000000}]),
+      solSel:{cpu:3, mb:3, ram:2, alm:3, gpu:3, psu:1},
+      sol:'Core Ultra 7 265K + placa Z890 + 32 GB DDR5-6000 + NVMe Gen4 2 TB + RTX 5070 + fuente de 650 W: $7.970.000. También sirve Ryzen 7 9800X3D + B650, o una RX 9070 XT con fuente de 750 W.',
+      pista:'La RTX 5080 con su fuente no cabe en el presupuesto junto a todo lo demás. Revisa el socket de tu procesador antes de elegir placa.',
+      exp:'Para edición pesan la RAM, los núcleos y un disco rápido y grande; la tarjeta ayuda a exportar más rápido.'}
+  ]
+}
+];
+MIS.forEach((m, mi) => m.retos.forEach((r, ri) => { r.id = `m${mi + 1}r${ri + 1}`; }));
+
+/* =========================================================
+   VARIANTES: cada estudiante recibe los retos en otro orden
+   y con versiones distintas (mismo tema, otros datos).
+   ========================================================= */
+const fN = n => Number(n).toLocaleString('es-CO');
+const fD = n => String(n).replace('.', ',');
+const VF = ['Verdadero', 'Falso'];
+const VARIANTES = {
+  m1r1: ['Core i7-14700F', 'Core i5-12400F'].map(c => ({
+    q:`Un cliente compró un Intel ${c}, lo instaló sin tarjeta de video y el monitor no muestra nada. ¿Qué pasó?` })),
+  m1r2: [{ pares:[['K (Core i7-14700K)','Desbloqueado para overclock'],['F (Core i5-12400F)','Sin gráficos integrados'],['U (Core i5-1335U)','Portátil delgado de bajo consumo'],['X3D (Ryzen 7 7800X3D)','Caché 3D extra para juegos'],['G (Ryzen 7 5700G)','Gráficos integrados más potentes']] }],
+  m1r3: [['Core i5-14600K', 6, 8], ['Core i7-14700K', 8, 12], ['Core i9-14900K', 8, 16]].map(([c, p, e]) => ({
+    q:`El ${c} tiene ${p} núcleos P con Hyper-Threading (2 hilos cada uno) y ${e} núcleos E (1 hilo cada uno). ¿Cuántos hilos tiene en total?`, ok:p * 2 + e,
+    pista:`Calcula por separado: ${p} × 2 para los núcleos P, más ${e} × 1 para los E.`,
+    exp:`${p} × 2 + ${e} × 1 = ${p * 2 + e} hilos. En la caja aparece como “${p + e} núcleos / ${p * 2 + e} hilos”.` })),
+  m1r4: [{ q:'En pruebas de juegos, el Ryzen 7 7800X3D (8 núcleos) suele superar al Ryzen 9 7950X (16 núcleos). ¿Cuál es la razón principal?' }],
+  m1r5: [{ items:[['Core i7-14700K',0],['Ryzen 9 9950X',0],['Ryzen 5 7600',0],['Core Ultra 9 288V',1],['Ryzen AI 7 350',1],['Core i5-1335U',1]],
+    pista:'Los sufijos U y V son de portátil; la familia Ryzen AI también.' }],
+
+  m2r1: [{ q:'Otro cliente pregunta: “Compré una placa Z890 para un Core Ultra 7 265K. ¿Le sirven mis memorias DDR4 si empujo más duro?”',
+    ops:['No: LGA1851 solo acepta DDR5 y la muesca de la DDR4 está en otro lugar','Sí, solo hay que empujar con más fuerza','Sí, pero primero hay que actualizar Windows','No, porque la placa está dañada'],
+    pista:'¿Qué tipo de memoria exige la plataforma LGA1851?' }],
+  m2r2: [{ q:'Santiago puede comprar 32 GB DDR5-6000 en un solo módulo de 32 GB o en dos módulos de 16 GB. ¿Qué le recomiendas?',
+    ops:['Dos de 16 GB, para activar el doble canal','Uno de 32 GB, porque un módulo es más rápido que dos','Da igual, el ancho de banda es el mismo','Mejor 32 GB de DDR4, que es más moderna'] }],
+  m2r3: [['DDR5-4800', 4800], ['DDR5-5600', 5600], ['DDR5-6400', 6400], ['DDR4-3200', 3200]].map(([t, v]) => ({
+    q:`¿Cuál es el ancho de banda teórico de dos módulos ${t} en doble canal? Usa la fórmula del manual (1.000 MB = 1 GB).`, ok:v * 16 / 1000, tol:0.05,
+    pista:`${fN(v)} × 8 = ${fN(v * 8)} MB/s por canal. Ahora multiplica por 2 canales y pásalo a GB.`,
+    exp:`${fN(v)} × 8 × 2 = ${fN(v * 16)} MB/s = ${fD(v * 16 / 1000)} GB/s. Con un solo módulo sería la mitad.` })),
+  m2r4: [
+    { q:'Verdadero o falso: un módulo DDR4 se puede instalar en una placa B650 si se empuja con cuidado.', ops:VF, ok:1,
+      pista:'¿Qué memoria acepta AM5?', exp:'Falso. AM5 solo acepta DDR5; la muesca está en otro lugar justamente para impedirlo.' },
+    { q:'Verdadero o falso: una placa B550 (AM4) funciona con memorias DDR4.', ops:VF, ok:0,
+      pista:'Revisa qué memoria usa la plataforma AM4.', exp:'Verdadero. AM4 es la plataforma de DDR4; AM5 ya exige DDR5.' }],
+  m2r5: [['DDR4-2400','DDR4-3600','DDR5-5200','DDR5-6400'], ['DDR4-2133','DDR4-3000','DDR5-5600','DDR5-7200']].map(items => ({ items,
+    exp:`${items.map(x => fN(x.split('-')[1])).join(' < ')} MT/s. Para AM5, la DDR5-6000 es la combinación más recomendada.` })),
+
+  m3r1: [{ q:'Felipe quiere el disco más rápido posible para editar. Ordena estas unidades de la más lenta a la más rápida.' }],
+  m3r2: [[56, 7000], [84, 7000], [140, 14000], [28, 14000], [11, 550]].map(([g, v]) => ({
+    q:`Felipe copia ${g} GB de fotos a un disco que escribe a ${fN(v)} MB/s. En el mejor caso, ¿cuántos segundos tarda? (1 GB = 1.000 MB)`, ok:g * 1000 / v,
+    pista:`Pasa ${g} GB a MB y divide entre la velocidad.`,
+    exp:`${fN(g * 1000)} MB ÷ ${fN(v)} MB/s = ${g * 1000 / v} segundos. En un HDD de 200 MB/s serían ${fD(Math.round(g * 1000 / 200))} segundos.` })),
+  m3r3: [['2 TB', 2e12], ['4 TB', 4e12], ['500 GB', 5e11]].map(([t, b]) => ({
+    q:`Un disco de ${t} tiene ${fN(b)} bytes. Windows divide entre 1.073.741.824 (1.024³). ¿Cuántos GB muestra aproximadamente? Redondea al entero.`, ok:Math.round(b / 1073741824),
+    pista:`Divide ${fN(b)} entre 1.073.741.824. Puedes usar la calculadora.`,
+    exp:`Da unos ${fN(Math.round(b / 1073741824))} GB. No falta espacio: Windows cuenta con 1.024 y el fabricante con 1.000.` })),
+  m3r4: [100, 200, 500, 600, 900].map(v => ({
+    q:`Felipe tiene internet de ${v} Mbps. ¿A cuántos MB/s descarga como máximo?`, ok:v / 8,
+    exp:`${v} ÷ 8 = ${fD(v / 8)} MB/s. Las empresas de internet anuncian megabits, no megabytes.` })),
+  m3r5: [{ q:'¿Qué debe decir la caja de un SSD para que vaya a unos 7.000 MB/s?',
+    ops:['NVMe PCIe 4.0','Solo “M.2”','SATA III','USB 2.0'],
+    exp:'La forma M.2 no garantiza velocidad: hay que buscar NVMe y la generación PCIe.' }],
+
+  m4r1: [{ pares:[['Intel Arc B580 (12 GB)','1080p económico'],['GeForce RTX 5070 (12 GB)','Juegos a 1440p'],['GeForce RTX 5080 (16 GB)','1440p extremo y 4K'],['Gráficos integrados del Ryzen 5 5600G','Oficina y juegos ligeros']] }],
+  m4r2: [['4K (3840 × 2160)', '720p (1280 × 720)', 9], ['1440p (2560 × 1440)', '720p (1280 × 720)', 4], ['4K (3840 × 2160)', '1440p (2560 × 1440)', 2.25]].map(([a, b, k]) => ({
+    q:`Una imagen ${a} tiene más píxeles que una ${b}. ¿Cuántas veces más? Si da decimal, usa dos cifras.`, ok:k, tol:0.01,
+    pista:'Multiplica ancho × alto de cada una y divide el resultado mayor entre el menor.',
+    exp:`El resultado es ${fD(k)}: por eso subir de resolución exige tanto más a la tarjeta.` })),
+  m4r3: [{ q:'Camila pregunta: “¿Qué hace la generación de cuadros?”',
+    ops:['Crea imágenes intermedias entre los cuadros reales para que el juego se vea más fluido','Duplica la VRAM de la tarjeta','Baja el consumo de la fuente a la mitad','Graba la pantalla para la transmisión'],
+    exp:'La tarjeta inventa cuadros entre los reales con ayuda de IA. Se ve más fluido, aunque no responde más rápido a los controles.' }],
+  m4r4: [120, 144, 240].map(f => ({
+    q:`Si un juego corre a ${f} FPS, ¿cuántos milisegundos dura cada cuadro? Responde con un decimal.`, ok:Math.round(10000 / f) / 10,
+    exp:`1.000 ÷ ${f} ≈ ${fD(Math.round(10000 / f) / 10)} ms. Entre más FPS, menos dura cada imagen y más fluido se ve.` })),
+  m4r5: [['GeForce RTX 5060', '550 W', ['550 W','350 W','1.000 W','La misma fuente que traía su PC de oficina']], ['GeForce RTX 5070', '650 W', ['650 W','400 W','1.200 W','La misma fuente que traía su PC de oficina']]].map(([g, w, ops]) => ({
+    q:`Un cliente quiere instalar una ${g}. ¿Qué fuente recomienda el fabricante como mínimo?`, ops, ok:0,
+    exp:`El fabricante recomienda ${w}. Una fuente más pequeña se queda corta en los picos; una exagerada solo encarece el equipo.` })),
+
+  m5r1: [{ items:[['Apple A19 Pro',0],['Snapdragon 8 Elite Gen 5',0],['Google Tensor G5',0],['MediaTek Helio G85',1],['MediaTek Helio G99',1],['Snapdragon 685',1]] }],
+  m5r2: [{ items:['MediaTek Helio G85','Snapdragon 685','MediaTek Dimensity 9500','Apple A20 Pro'],
+    exp:'12 nm, 6 nm, 3 nm y 2 nm. Entre más pequeño el proceso, más moderno y eficiente el chip.' }],
+  m5r3: [{ q:'Verdadero o falso: dos celulares “octa core” siempre tienen el mismo rendimiento.', ops:VF, ok:1,
+    pista:'Piensa en un Helio G85 y un Snapdragon 8 Elite Gen 6: ¿cuántos núcleos tiene cada uno?',
+    exp:'Falso. Los dos tienen 8 núcleos, pero cambian el tipo de núcleo, la frecuencia, los nanómetros y la GPU.' }],
+  m5r4: [[6000, 750], [5000, 500], [4500, 750], [6000, 500]].map(([b, c]) => ({
+    q:`Un celular tiene una batería de ${fN(b)} mAh y, jugando, consume en promedio ${c} mA. ¿Cuántas horas dura jugando?`, ok:b / c,
+    exp:`${fN(b)} ÷ ${c} = ${b / c} horas. Bajar el brillo o la frecuencia de pantalla reduce el consumo.` })),
+  m5r5: [{ q:'Don Hernán solo usa WhatsApp, llamadas y la app del banco. Quiere algo económico y que la batería le dure. ¿Qué ficha le recomiendas?',
+    ops:['Helio G85, 4 GB de RAM, 128 GB, 5.000 mAh','Snapdragon 8 Elite Gen 6, 16 GB, 1 TB (el más caro de la tienda)','Apple A20 Pro, 12 GB, 2 TB','Helio G99, 8 GB, 256 GB, pero cuesta más de lo que puede pagar'],
+    pista:'No necesita potencia: necesita batería y buen precio.',
+    exp:'Para sus usos, un Helio G85 con 4 GB es suficiente. Venderle un gama alta sería cobrarle por algo que no va a usar.' }],
+
+  m6r1: [{ pares:[['Ryzen 7 5700G','AM4'],['Ryzen 5 7600','AM5'],['Core i7-14700K','LGA1700'],['Core Ultra 9 285K','LGA1851']] }],
+  m6r2: [['Ryzen 5 7600', 65, 'RTX 5060', 145], ['Core i5-14400F', 65, 'RTX 5070 Ti', 300], ['Core Ultra 7 265K', 125, 'RX 9070 XT', 304]].map(([c, wc, g, wg]) => {
+    const t = wc + wg + 80, f = Math.round(t * 1.4 * 10) / 10;
+    return { q:`Óscar tiene un ${c} (${wc} W) y una ${g} (${wg} W). Suma 80 W para el resto del equipo y agrega un 40 % de margen. ¿Cuántos vatios debería tener su fuente como mínimo?`, ok:f, tol:1,
+      pista:`${wc} + ${wg} + 80 = ${t}. Ahora calcula ${t} × 1,4.`,
+      exp:`${t} × 1,4 = ${fD(f)} W. Como las fuentes vienen en tamaños fijos, se elige la siguiente que exista en el catálogo.` };
+  }),
+  m6r3: [
+    { q:'Verdadero o falso: un Ryzen 7 9800X3D se puede instalar en una placa B550.', ops:VF, ok:1,
+      pista:'¿Qué socket usa la B550 y cuál el Ryzen 9000?', exp:'Falso. La B550 es AM4 y el 9800X3D es AM5.' },
+    { q:'Verdadero o falso: un Ryzen 5 5600G funciona en una placa B550.', ops:VF, ok:0,
+      pista:'Ryzen 5000 y B550: ¿qué socket comparten?', exp:'Verdadero. Los dos son AM4.' }],
+  m6r4: [{ q:'Un cliente compró un Ryzen 7 9800X3D y quiere jugar a 1440p usando solo los gráficos que trae el procesador. ¿Qué le adviertes?',
+    ops:['Los gráficos integrados serán el cuello de botella: para 1440p necesita una tarjeta dedicada','Va a funcionar igual que con una RTX 5080','El procesador hace que los gráficos integrados sean de gama alta','No pasa nada, en los juegos solo importa el procesador'],
+    pista:'¿Cuál pieza se quedaría corta para dibujar a 1440p?',
+    exp:'Los gráficos integrados del 9800X3D sirven para dar imagen, no para jugar a 1440p: ahí la tarjeta es la pieza que manda.' }],
+  m6r5: [{ q:'¿Por qué se deja un margen de 30 a 40 % al calcular la fuente de poder?',
+    ops:['Para cubrir los picos de consumo y que la fuente no trabaje al límite','Porque las fuentes pierden la mitad de su potencia cada año','Para poder conectar dos monitores','Porque así lo exige Windows'],
+    exp:'Las tarjetas tienen picos de consumo de milisegundos; una fuente con margen los aguanta y además se calienta menos.' }]
+};
+MIS.forEach(m => m.retos.forEach(r => { if (VARIANTES[r.id]) r.var = VARIANTES[r.id]; }));
+
+/* ---------- Azar con semilla: cada estudiante siempre ve SU versión ---------- */
+function hashTxt(s){ let h = 2166136261; for (const c of String(s)){ h ^= c.codePointAt(0); h = Math.imul(h, 16777619); } return h >>> 0; }
+function rngDe(seed){ let a = seed >>> 0; return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+function personalizar(semilla){
+  MIS.forEach((m, mi) => {
+    const rnd = rngDe(hashTxt(semilla + '|m' + mi)), orden = m.retos.slice();
+    for (let i = orden.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [orden[i], orden[j]] = [orden[j], orden[i]]; }
+    m.retos = orden.map(r => {
+      if (!r.var) return r;
+      const k = Math.floor(rngDe(hashTxt(semilla + '|' + r.id))() * (r.var.length + 1));
+      return k === 0 ? r : Object.assign({}, r, r.var[k - 1]);
+    });
+  });
+}
+
+const TOTAL = MIS.reduce((s, m) => s + m.retos.length, 0);
+const MAXP = TOTAL * PTS[0];
+/* Tienda de notas: precio = porcentaje del salario máximo posible */
+const NOTAS = [[5.0, .9], [4.5, .8], [4.0, .7], [3.5, .6], [3.0, .5]].map(([n, pct]) => ({ n, pct, precio:Math.round(MAXP * pct) }));
+const fmtNota = n => n.toFixed(1).replace('.', ',');
+function notaComprable(sal){
+  const t = NOTAS.find(x => sal >= x.precio);
+  if (t) return t.n;
+  return Math.min(2.9, Math.round((1 + 1.9 * sal / NOTAS[NOTAS.length - 1].precio) * 10) / 10);   // no alcanza: de 1,0 a 2,9
+}
+
+/* ---------- Estado ---------- */
+const S = { user:'', clave:'', nombre:'', curso:'', demo:false, res:{}, tries:{}, sonido:true,
+  saving:false, again:false, pend:[], ver:0, savedVer:0, saveSt:'ok', retryT:null,
+  faltas:0, racha:0, penal:0, bloq:false, pausaVig:false, bloqT:null };
+let R = null;   // reto en curso
+
+const ganadas = () => Object.values(S.res).reduce((s, x) => s + (x.p || 0), 0);
+const monedas = () => Math.max(0, ganadas() - S.penal);
+const resueltos = () => Object.keys(S.res).length;
+const correctos = () => Object.values(S.res).filter(x => x.ok).length;
+const nota = () => notaComprable(monedas());
+const notaTxt = () => nota().toFixed(1).replace('.', ',');
+const misionHecha = mi => MIS[mi].retos.every(r => S.res[r.id]);
+const abierta = () => true;   // todas las misiones abiertas
+function posActual(){
+  for (let mi = 0; mi < MIS.length; mi++) for (let ri = 0; ri < MIS[mi].retos.length; ri++) if (!S.res[MIS[mi].retos[ri].id]) return {mi, ri};
+  return null;
+}
+function rango(n){ return n >= 4.6 ? 'Experto en hardware' : n >= 4 ? 'Especialista certificado' : n >= 3 ? 'Técnico en formación' : 'Aprendiz de taller'; }
+const pendiente = () => S.saving || S.ver !== S.savedVer || S.pend.length > 0;
+
+/* ---------- Sonido ---------- */
+let AC = null;
+function tono(f, d = .12, tipo = 'sine', v = .08, delay = 0){
+  if (!S.sonido) return;
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    const t = AC.currentTime + delay, o = AC.createOscillator(), g = AC.createGain();
+    o.type = tipo; o.frequency.value = f;
+    g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + d);
+    o.connect(g); g.connect(AC.destination); o.start(t); o.stop(t + d + .02);
+  } catch (e) {}
+}
+const SFX = {
+  ok(){ tono(660, .1); tono(880, .1, 'sine', .08, .1); tono(1320, .18, 'triangle', .06, .2); },
+  bad(){ tono(200, .22, 'square', .045); },
+  tap(){ tono(520, .05, 'triangle', .04); },
+  win(){ [523, 659, 784, 1046].forEach((f, i) => tono(f, .2, 'triangle', .07, i * .12)); }
+};
+
+/* ---------- Conexión con la hoja ---------- */
+async function api(body){
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 25000);
+  try {
+    const res = await fetch(SCRIPT_URL, { method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body:JSON.stringify(body), signal:ctl.signal });
+    return await res.json();
+  } finally { clearTimeout(t); }
+}
+function resumen(){
+  const p = posActual();
+  return { mision: p ? `M${p.mi + 1} ${MIS[p.mi].titulo} (reto ${p.ri + 1})` : 'Terminó todas las misiones',
+    retos: resueltos(), total: TOTAL, correctos: correctos(), monedas: monedas(), nota: nota(), finalizado: !p, salidas: S.faltas };
+}
+async function guardar(){
+  if (S.demo){ setSave('demo'); return; }
+  if (S.saving){ S.again = true; return; }
+  clearTimeout(S.retryT);
+  S.saving = true; setSave('saving');
+  const ver = S.ver, env = S.pend.slice();
+  try {
+    const r = await api({ accion:'guardar', usuario:S.user, clave:S.clave, estado:{v:1, res:S.res, tries:S.tries, faltas:S.faltas, racha:S.racha, penal:S.penal, bloq:S.bloq}, resumen:resumen(), eventos:env });
+    if (!r || !r.ok) throw new Error((r && r.error) || 'Respuesta inválida');
+    S.pend.splice(0, env.length); S.savedVer = ver; setSave('ok');
+  } catch (e) {
+    setSave('error'); S.retryT = setTimeout(guardar, 10000);
+  } finally {
+    S.saving = false;
+    if (S.again){ S.again = false; guardar(); }
+  }
+}
+const SAVE_TXT = { ok:'Progreso guardado', saving:'Guardando…', error:'Sin conexión: reintentando', demo:'Modo demo: no se guarda' };
+function setSave(st){ S.saveSt = st; const e = $('#saveSt'); if (e){ e.className = 'save ' + st; e.textContent = SAVE_TXT[st]; } }
+window.addEventListener('beforeunload', e => { if (S.user && !S.demo && pendiente()){ e.preventDefault(); e.returnValue = ''; } });
+
+/* =========================================================
+   PANTALLAS
+   ========================================================= */
+const app = $('#app');
+function pantalla(html){ app.innerHTML = html; window.scrollTo(0, 0); }
+
+function renderLogin(){
+  pantalla(`<main class="login">
+  <svg class="sign" viewBox="0 0 600 180" role="img" aria-label="TecnoTienda Pro">
+    <defs><filter id="glow" x="-10%" y="-30%" width="120%" height="160%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+    <rect x="10" y="10" width="580" height="160" rx="22" fill="#0b0b20" stroke="#9d6bff" stroke-width="3" filter="url(#glow)"/>
+    <g class="flick" filter="url(#glow)">
+      <text x="300" y="100" text-anchor="middle" font-family="Orbitron, sans-serif" font-weight="900" font-size="54" textLength="540" lengthAdjust="spacingAndGlyphs" fill="none" stroke="#00e5ff" stroke-width="2.2">TecnoTienda Pro</text>
+    </g>
+    <text x="300" y="142" text-anchor="middle" font-family="Rajdhani, sans-serif" font-weight="700" font-size="24" fill="#ff2bd6" filter="url(#glow)">Asesoría técnica avanzada en hardware</text>
+  </svg>
+  <p class="lead">Lee fichas técnicas reales, resuelve casos de clientes y arma cotizaciones compatibles de computadores y celulares.</p>
+  <form class="login-card" id="fLogin" novalidate>
+    <label>Usuario<input id="lu" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false"></label>
+    <label>Contraseña<input id="lc" type="password" autocomplete="current-password"></label>
+    <button class="btn pri" id="btnEntrar" type="button">Entrar a la tienda</button>
+    <p id="lmsg" class="lmsg" role="status" aria-live="polite">${SCRIPT_URL ? '' : 'Modo demo: entra con usuario <b>demo</b> y contraseña <b>1234</b>. El progreso no se guarda.'}</p>
+  </form>
+  <p class="pie">Misaelverse. Tecnología, grado séptimo. Colegio Misael Pastrana Borrero IED</p>
+  </main>`);
+  $('#fLogin').onsubmit = e => { e.preventDefault(); };
+  $('#btnEntrar').onclick = entrar;
+  ['#lu', '#lc'].forEach(s => { $(s).onkeydown = e => { if (e.key === 'Enter'){ e.preventDefault(); entrar(); } }; });
+  $('#lu').focus();
+}
+
+async function entrar(){
+  const u = $('#lu').value.trim(), c = $('#lc').value.trim(), msg = $('#lmsg'), b = $('#btnEntrar');
+  if (!u || !c){ msg.textContent = 'Escribe tu usuario y tu contraseña.'; return; }
+  if (norm(u) === 'demo' && c === '1234'){ Object.assign(S, {demo:true, user:'demo', nombre:'Profe', curso:'Modo de prueba', saveSt:'demo'}); arrancar(null); return; }
+  if (!SCRIPT_URL){ msg.innerHTML = 'Modo demo: entra con usuario <b>demo</b> y contraseña <b>1234</b>.'; return; }
+  b.disabled = true; msg.textContent = 'Buscando tu ficha en la tienda…';
+  try {
+    const r = await api({ accion:'login', usuario:u, clave:c });
+    if (!r || !r.ok){ msg.textContent = (r && r.error) || 'No se pudo entrar. Intenta otra vez.'; b.disabled = false; return; }
+    const tc = s => String(s).toLowerCase().replace(/(^|\s)(\S+)/g, (m, a, w) => a + (['de', 'del', 'la'].includes(w) ? w : w[0].toUpperCase() + w.slice(1)));
+    Object.assign(S, { user:r.usuario, clave:c, nombre:tc(r.nombre || r.usuario), curso:r.curso || '' });
+    arrancar(r.estado);
+  } catch (e) {
+    msg.textContent = 'No hay conexión con la hoja de la profe. Revisa el internet y vuelve a intentar.';
+    b.disabled = false;
+  }
+}
+
+function arrancar(est){
+  personalizar(S.demo ? String(Math.random()) : S.user);
+  if (est && est.res){ S.res = est.res; S.tries = est.tries || {}; S.faltas = est.faltas || 0; S.racha = est.racha || 0; S.penal = est.penal || 0; S.bloq = !!est.bloq; }
+  else if (!S.demo){ S.ver++; guardar(); }   // registra que el estudiante entró
+  renderHub();
+  if (S.bloq) mostrarBloqueo(0);
+}
+
+function salir(){
+  S.pausaVig = true;
+  if (!S.demo && pendiente() && !confirm('Tu último avance todavía se está guardando. Si sales ahora podrías perderlo. ¿Salir de todos modos?')){ S.pausaVig = false; return; }
+  S.ver = S.savedVer; S.pend = [];
+  location.reload();
+}
+
+function hud(){
+  return `<header class="hud">
+    <div class="hud-marca">TecnoTienda Pro</div>
+    <div class="hud-user"><b>${esc(S.nombre)}</b><span>${esc(S.curso)}</span></div>
+    <div class="hud-coins" aria-label="Salario disponible">${COIN}<b id="coins">${money(monedas())}</b></div>
+    ${VIG.activa ? `<div id="hudSal" class="hud-sal ${S.faltas ? 'alerta' : ''}">Salidas: ${S.faltas}</div>` : ''}
+    <div id="saveSt" class="save ${S.saveSt}">${SAVE_TXT[S.saveSt]}</div>
+    <button class="icon-btn" id="btnSon" aria-label="Activar o silenciar el sonido">${S.sonido ? '🔊' : '🔇'}</button>
+    <button class="icon-btn" id="btnSalir">Salir</button>
+  </header>`;
+}
+function bindHud(){
+  $('#btnSon').onclick = () => { S.sonido = !S.sonido; $('#btnSon').textContent = S.sonido ? '🔊' : '🔇'; };
+  $('#btnSalir').onclick = salir;
+}
+
+/* ---------- Tienda (inicio) ---------- */
+function renderHub(){
+  const cur = posActual(), n = resueltos(), primer = esc((S.nombre || '').split(' ')[0]);
+  let msg, txtBtn;
+  if (!cur){ msg = `¡Lo lograste, ${primer}! Atendiste a todos los clientes de la tienda. Mira tu resultado final.`; txtBtn = 'Ver mi resultado'; }
+  else if (n === 0){ msg = `¡Hola, ${primer}! Desde hoy trabajas como asesor técnico en TecnoTienda Pro. Cada reto es un trabajo pagado: te pagan ${money(PTS[0])} si lo resuelves al primer intento, ${money(PTS[1])} al segundo y ${money(PTS[2])} al tercero. Al final, con tu salario compras tu nota en la tienda de notas. Las 7 secciones están abiertas: puedes empezar por la que quieras, aunque te recomiendo ir en orden.`; txtBtn = 'Empezar a trabajar'; }
+  else { const m = MIS[cur.mi]; msg = `¡Qué bueno verte, ${primer}! Ibas en la misión ${cur.mi + 1}, “${esc(m.titulo)}”, reto ${cur.ri + 1} de ${m.retos.length}. Sigue donde quedaste.`; txtBtn = 'Continuar donde quedé'; }
+
+  pantalla(hud() + `<main class="wrap">
+    <section class="mostrador">
+      <div>${avatar(JEFA)}</div>
+      <div class="burbuja"><div class="quien">Ingeniera Marcela, jefa del taller</div><p>${msg}</p>
+        ${VIG.activa && cur ? `<p class="aviso">Regla del taller: si cambias de pestaña, minimizas o abres otra ventana, te descuentan ${money(VIG.penalMonedas)} del salario y te alcanza para una nota más baja. Con ${VIG.maxSalidas} salidas la actividad se bloquea.</p>` : ''}
+        <button class="btn pri" id="btnSeguir">${txtBtn}</button></div>
+    </section>
+    <div class="prog"><span>Retos resueltos: ${n} de ${TOTAL}</span><div class="bar"><i style="width:${n / TOTAL * 100}%"></i></div></div>
+    <section class="lista-precios"><h2 class="sec-t">Tienda de notas: precios</h2>
+      <div class="precios">${NOTAS.map(x => `<div class="precio-nota ${monedas() >= x.precio ? 'alcanza' : ''}"><b>${fmtNota(x.n)}</b><span>${money(x.precio)}</span></div>`).join('')}</div>
+      <p class="precios-nota">Salario máximo posible: ${money(MAXP)}. Llevas ${money(monedas())}: hoy te alcanza para un <b>${fmtNota(nota())}</b>. Con menos de ${money(NOTAS[NOTAS.length - 1].precio)} no alcanza para aprobar.</p></section>
+    <h2 class="sec-t">Secciones de la tienda</h2>
+    <div class="estantes">${MIS.map(estante).join('')}</div>
+  </main>`);
+  bindHud();
+  $('#btnSeguir').onclick = () => cur ? abrirMision(cur.mi) : renderFinal();
+  $$('.estante[data-mi]').forEach(b => b.onclick = () => abrirMision(+b.dataset.mi));
+}
+function estante(m, mi){
+  const hechos = m.retos.filter(r => S.res[r.id]).length, tot = m.retos.length;
+  const est = hechos === tot ? 'hecha' : (abierta(mi) ? 'abierta' : 'cerrada');
+  const lbl = est === 'hecha' ? 'Completada' : est === 'abierta' ? (hechos ? `En curso: ${hechos} de ${tot}` : `${tot} retos`) : 'Se abre al terminar la anterior';
+  return `<button class="estante ${est}" ${est !== 'cerrada' ? `data-mi="${mi}"` : 'disabled'} aria-label="Misión ${mi + 1}: ${esc(m.titulo)}. ${lbl}">
+    <span class="est-n">Misión ${mi + 1}</span><span class="est-ico">${ICON[m.icono]}</span>
+    <span class="est-t">${esc(m.titulo)}</span><span class="est-c">Cliente: ${esc(m.cli.nombre)}</span>
+    <span class="est-bar"><i style="width:${hechos / tot * 100}%"></i></span><span class="est-l">${lbl}</span></button>`;
+}
+
+/* ---------- Misión ---------- */
+function abrirMision(mi){
+  if (!abierta(mi)) return;
+  const m = MIS[mi], ri = m.retos.findIndex(r => !S.res[r.id]);
+  if (ri === -1) return renderCierre(mi);
+  if (ri === 0 && !S.tries[m.retos[0].id]) return renderIntro(mi);
+  renderReto(mi, ri);
+}
+function dotsHtml(mi, ri){
+  return MIS[mi].retos.map((r, i) => { const x = S.res[r.id]; return `<i class="dot ${x ? (x.ok ? 'ok' : 'mal') : (i === ri ? 'cur' : '')}"></i>`; }).join('');
+}
+function barMision(mi, ri, conManual){
+  return `<div class="mbar"><button class="link" id="btnTienda">Volver a la tienda</button>
+    <div class="mbar-t"><span>Misión ${mi + 1}</span><b>${esc(MIS[mi].titulo)}</b></div>
+    <div class="dots" aria-hidden="true">${dotsHtml(mi, ri)}</div>
+    ${conManual ? '<button class="link" id="btnManual">Repasar manual</button>' : ''}</div>`;
+}
+function bindBar(){ const b = $('#btnTienda'); if (b) b.onclick = renderHub; }
+
+function renderIntro(mi){
+  const m = MIS[mi];
+  pantalla(hud() + `<main class="wrap">${barMision(mi, -1)}
+    <section class="escena"><div>${avatar(m.cli)}</div>
+      <div class="burbuja"><div class="quien">${esc(m.cli.nombre)}, ${esc(m.cli.rol)}</div><p>${m.pedido}</p></div></section>
+    <div class="acciones"><button class="btn pri" id="go">Abrir el manual del técnico</button></div></main>`);
+  bindHud(); bindBar();
+  $('#go').onclick = () => renderManual(mi, 0, null);
+  $('#go').focus();
+}
+
+function renderManual(mi, p, volverA){
+  const m = MIS[mi], pg = m.manual[p], last = m.manual.length - 1;
+  const sig = p < last ? 'Página siguiente' : (volverA != null ? 'Volver al reto' : `Atender a ${m.cli.nombre}`);
+  pantalla(hud() + `<main class="wrap">${barMision(mi, -1)}
+    <article class="manual">
+      <div class="man-head"><span class="man-ico">${ICON[pg.fig || m.icono]}</span>
+        <div><div class="man-pag">Manual del técnico, página ${p + 1} de ${m.manual.length}</div><h2>${pg.t}</h2></div></div>
+      ${(pg.p || []).map(x => `<p>${x}</p>`).join('')}
+      ${pg.fichas ? `<dl class="fichas">${pg.fichas.map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl>` : ''}
+    </article>
+    <div class="acciones"><button class="btn" id="ant" ${p === 0 ? 'disabled' : ''}>Página anterior</button><button class="btn pri" id="sig">${esc(sig)}</button></div></main>`);
+  bindHud(); bindBar();
+  $('#ant').onclick = () => renderManual(mi, p - 1, volverA);
+  $('#sig').onclick = () => {
+    if (p < last) return renderManual(mi, p + 1, volverA);
+    const ri = volverA != null ? volverA : m.retos.findIndex(r => !S.res[r.id]);
+    renderReto(mi, ri < 0 ? 0 : ri);
+  };
+  $('#sig').focus();
+}
+
+/* ---------- Reto ---------- */
+function renderReto(mi, ri){
+  const m = MIS[mi], r = m.retos[ri];
+  R = { mi, ri, r, done:false, int:S.tries[r.id] || 0, check:null, retry:null, reveal:null };
+  const quien = r.cli || m.cli;
+  pantalla(hud() + `<main class="wrap">${barMision(mi, ri, true)}
+    <section>
+      <div class="reto-head"><div>${avatar(quien)}</div>
+        <div class="burbuja"><div class="quien">Reto ${ri + 1} de ${m.retos.length}. ${esc(quien.nombre)}</div><p>${r.q}</p></div></div>
+      <div id="zona" class="zona"></div>
+      <div id="fb" class="fb" role="status" aria-live="polite"></div>
+      <div class="acciones"><span class="intentos" id="intentos"></span>
+        <button class="btn pri" id="btnRev">${r.tipo === 'build' ? 'Entregar pedido' : 'Revisar'}</button></div>
+    </section></main>`);
+  bindHud(); bindBar();
+  $('#btnManual').onclick = () => renderManual(mi, 0, ri);
+  TIPOS[r.tipo]($('#zona'), r);
+  pintaIntentos();
+  $('#btnRev').onclick = revisar;
+}
+function pintaIntentos(){
+  const e = $('#intentos'); if (!e) return;
+  if (R.done){ e.textContent = ''; return; }
+  const q = 3 - R.int;
+  e.textContent = R.int === 0 ? `Si lo resuelves al primer intento te pagan ${money(PTS[0])}` : `Te ${q === 1 ? 'queda 1 intento' : `quedan ${q} intentos`}`;
+}
+function fb(cls, html){ const e = $('#fb'); e.className = 'fb show ' + cls; e.innerHTML = html; }
+function info(t){ fb('info', esc(t)); }
+
+function revisar(){
+  if (!R || R.done) return;
+  const out = R.check();
+  if (!out) return;
+  R.int++; S.tries[R.r.id] = R.int;
+  if (out.ok) return terminar(true);
+  if (R.int >= 3){ if (R.reveal) R.reveal(); return terminar(false); }
+  SFX.bad();
+  const q = 3 - R.int;
+  fb('mal', `<b>Todavía no.</b> ${out.msg ? esc(out.msg) + ' ' : ''}Te ${q === 1 ? 'queda 1 intento' : `quedan ${q} intentos`}.<br><span class="pista">Pista: ${R.r.pista}</span>`);
+  pintaIntentos();
+  if (R.retry) R.retry();
+}
+
+function solucion(r){
+  switch (r.tipo){
+    case 'mcq': return r.ops[r.ok];
+    case 'match': return r.pares.map(([a, b]) => `${a}: ${b}`).join('. ');
+    case 'order': return r.items.join(', ');
+    case 'clasif': return r.cats.map((c, ci) => `${c}: ${r.items.filter(x => x[1] === ci).map(x => x[0]).join(', ')}`).join('. ');
+    case 'num': return `${String(r.ok).replace('.', ',')} ${r.unidad}`;
+    case 'build': return r.sol;
+  }
+  return '';
+}
+
+function terminar(ok){
+  R.done = true;
+  const pts = ok ? PTS[R.int - 1] : 0, m = MIS[R.mi], last = R.ri === m.retos.length - 1;
+  S.res[R.r.id] = { ok, i:R.int, p:pts };
+  $$('#zona button, #zona input').forEach(b => { b.disabled = true; });
+  if (ok){ SFX.ok(); fb('bien', `<b>¡Cliente feliz! Te pagaron ${money(pts)}.</b> ${R.r.exp}`); }
+  else { SFX.bad(); fb('fin', `<b>Este trabajo no se pagó, pero aprendiste algo.</b><span class="sol">La respuesta: ${solucion(R.r)}</span>${R.r.exp}`); }
+  $('#coins').textContent = money(monedas());
+  $('.dots').innerHTML = dotsHtml(R.mi, -1);
+  pintaIntentos();
+  S.pend.push({ mision:`M${R.mi + 1} ${m.titulo}`, reto:R.ri + 1, resultado: ok ? 'Correcto' : 'Incorrecto', intentos:R.int, monedas:pts, fecha:new Date().toISOString() });
+  S.ver++; guardar();
+  const b = $('#btnRev');
+  b.textContent = last ? 'Terminar misión' : 'Siguiente reto';
+  const mi = R.mi, ri = R.ri;
+  b.onclick = () => last ? renderCierre(mi) : renderReto(mi, ri + 1);
+  b.focus();
+}
+
+/* ---------- Tipos de reto ---------- */
+const COL = ['#00e5ff', '#ff2bd6', '#ffd166', '#38f59a', '#9d6bff', '#ff8a3d'];
+const TIPOS = {
+  mcq(z, r){
+    const orden = r.ops.length > 2 ? shuffle(r.ops.map((_, i) => i)) : r.ops.map((_, i) => i);
+    let sel = null;
+    z.innerHTML = `<div class="ops">${orden.map(i => `<button class="op" data-i="${i}">${r.ops[i]}</button>`).join('')}</div>`;
+    $$('.op', z).forEach(b => b.onclick = () => {
+      if (R.done) return; SFX.tap();
+      $$('.op', z).forEach(x => x.classList.remove('sel')); b.classList.add('sel'); sel = +b.dataset.i;
+    });
+    R.check = () => {
+      if (sel === null){ info('Elige una opción antes de revisar.'); return null; }
+      const b = $(`.op[data-i="${sel}"]`, z);
+      if (sel === r.ok){ b.classList.add('bien'); return { ok:true }; }
+      b.classList.remove('sel'); b.classList.add('mal'); b.disabled = true; sel = null;
+      return { ok:false };
+    };
+    R.reveal = () => $(`.op[data-i="${r.ok}"]`, z).classList.add('bien');
+  },
+
+  match(z, r){
+    const n = r.pares.length, der = shuffle(r.pares.map((_, i) => i)), pair = {}, fijo = new Set();
+    let selL = 0;
+    z.innerHTML = `<p class="ayuda">Toca un elemento de la izquierda y luego su pareja de la derecha. Para deshacer una pareja, tócala otra vez.</p>
+      <div class="match"><div class="col">${r.pares.map((p, i) => `<button class="mi" data-l="${i}"><span class="tag"></span>${p[0]}</button>`).join('')}</div>
+      <div class="col">${der.map(j => `<button class="mi" data-r="${j}"><span class="tag"></span>${r.pares[j][1]}</button>`).join('')}</div></div>`;
+    const libre = () => { for (let i = 0; i < n; i++) if (pair[i] == null && !fijo.has(i)) return i; return null; };
+    function pintar(){
+      const inv = {}; Object.keys(pair).forEach(i => { inv[pair[i]] = +i; });
+      $$('[data-l]', z).forEach(b => {
+        const i = +b.dataset.l, has = pair[i] != null;
+        b.classList.toggle('sel', selL === i && !has); b.classList.toggle('par', has); b.classList.toggle('bien', fijo.has(i));
+        b.style.setProperty('--c', COL[i % COL.length]); b.querySelector('.tag').textContent = i + 1;
+        b.setAttribute('aria-pressed', selL === i && !has);
+      });
+      $$('[data-r]', z).forEach(b => {
+        const j = +b.dataset.r, i = inv[j], has = i != null;
+        b.classList.toggle('par', has); b.classList.toggle('bien', has && fijo.has(i));
+        b.style.setProperty('--c', has ? COL[i % COL.length] : 'transparent'); b.querySelector('.tag').textContent = has ? i + 1 : '';
+      });
+    }
+    $$('[data-l]', z).forEach(b => b.onclick = () => {
+      if (R.done) return; const i = +b.dataset.l; if (fijo.has(i)) return; SFX.tap();
+      if (pair[i] != null) delete pair[i];
+      selL = i;
+      pintar();
+    });
+    $$('[data-r]', z).forEach(b => b.onclick = () => {
+      if (R.done) return; const j = +b.dataset.r;
+      const dueno = Object.keys(pair).find(k => pair[k] === j);
+      if (dueno != null){ if (fijo.has(+dueno)) return; delete pair[dueno]; selL = +dueno; SFX.tap(); pintar(); return; }
+      if (selL === null || pair[selL] != null){ info('Primero toca un elemento de la izquierda.'); return; }
+      pair[selL] = j; SFX.tap(); selL = libre(); pintar();
+    });
+    pintar();
+    R.check = () => {
+      if (Object.keys(pair).length < n){ info('Une todas las parejas antes de revisar.'); return null; }
+      let bien = 0;
+      Object.keys(pair).forEach(i => { if (pair[i] === +i){ fijo.add(+i); bien++; } });
+      if (bien === n){ pintar(); return { ok:true }; }
+      Object.keys(pair).forEach(i => { if (!fijo.has(+i)) delete pair[i]; });
+      selL = libre(); pintar();
+      return { ok:false, msg:`Tienes ${bien} de ${n} parejas bien; las correctas quedaron fijas.` };
+    };
+    R.reveal = () => { for (let i = 0; i < n; i++){ pair[i] = i; fijo.add(i); } selL = null; pintar(); };
+  },
+
+  order(z, r){
+    const n = r.items.length, slots = Array(n).fill(null), fijo = new Set();
+    let pool = shuffle(r.items.map((_, i) => i));
+    if (pool.every((v, i) => v === i)) pool.reverse();
+    function pintar(){
+      z.innerHTML = `<p class="ayuda">Toca los elementos en orden, empezando por el primero. Para quitar uno, tócalo en su casilla.</p>
+        <ol class="slots">${slots.map((v, k) => `<li><button class="slot ${v == null ? 'vacio' : ''} ${fijo.has(k) ? 'bien' : ''}" data-s="${k}" aria-label="Casilla ${k + 1}: ${v == null ? 'vacía' : esc(r.items[v])}"><span class="sn">${k + 1}</span>${v == null ? '' : r.items[v]}</button></li>`).join('')}</ol>
+        <div class="pool">${pool.map(v => `<button class="chip" data-v="${v}">${r.items[v]}</button>`).join('')}</div>`;
+      $$('.chip', z).forEach(b => b.onclick = () => {
+        if (R.done) return; const v = +b.dataset.v, k = slots.findIndex(x => x == null); if (k < 0) return;
+        SFX.tap(); slots[k] = v; pool = pool.filter(x => x !== v); pintar();
+        const sig = $('.chip', z) || $('#btnRev'); if (sig) sig.focus();
+      });
+      $$('.slot', z).forEach(b => b.onclick = () => {
+        if (R.done) return; const k = +b.dataset.s; if (fijo.has(k) || slots[k] == null) return;
+        SFX.tap(); pool.push(slots[k]); slots[k] = null; pintar();
+      });
+    }
+    pintar();
+    R.check = () => {
+      if (slots.some(x => x == null)){ info('Ubica todos los elementos antes de revisar.'); return null; }
+      let bien = 0;
+      slots.forEach((v, k) => { if (v === k){ fijo.add(k); bien++; } });
+      if (bien === n){ pintar(); return { ok:true }; }
+      slots.forEach((v, k) => { if (!fijo.has(k)){ pool.push(v); slots[k] = null; } });
+      pintar();
+      return { ok:false, msg:`${bien} de ${n} quedaron en su lugar y se quedan fijos.` };
+    };
+    R.reveal = () => { for (let k = 0; k < n; k++){ slots[k] = k; fijo.add(k); } pool = []; pintar(); };
+  },
+
+  clasif(z, r){
+    const n = r.items.length, orden = shuffle(r.items.map((_, i) => i)), resp = {}, fijo = new Set(), mal = new Set();
+    z.innerHTML = `<div class="clasif">${orden.map(i => `<div class="fila" data-f="${i}"><span class="fila-t">${r.items[i][0]}</span>
+      <span class="seg" role="group" aria-label="${esc(r.items[i][0])}">${r.cats.map((c, ci) => `<button data-i="${i}" data-c="${ci}" aria-pressed="false">${c}</button>`).join('')}</span></div>`).join('')}</div>`;
+    function pintar(){
+      $$('.fila', z).forEach(f => {
+        const i = +f.dataset.f;
+        f.classList.toggle('bien', fijo.has(i)); f.classList.toggle('mal', mal.has(i));
+        $$('button', f).forEach(b => { const s = resp[i] === +b.dataset.c; b.classList.toggle('sel', s); b.setAttribute('aria-pressed', s); });
+      });
+    }
+    $$('.seg button', z).forEach(b => b.onclick = () => {
+      if (R.done) return; const i = +b.dataset.i; if (fijo.has(i)) return;
+      SFX.tap(); resp[i] = +b.dataset.c; mal.delete(i); pintar();
+    });
+    R.check = () => {
+      if (Object.keys(resp).length < n){ info('Clasifica todos los elementos antes de revisar.'); return null; }
+      let bien = 0;
+      for (let i = 0; i < n; i++){ if (resp[i] === r.items[i][1]){ fijo.add(i); bien++; } else { mal.add(i); } }
+      if (bien === n){ pintar(); return { ok:true }; }
+      for (let i = 0; i < n; i++) if (!fijo.has(i)) delete resp[i];
+      pintar();
+      return { ok:false, msg:`${bien} de ${n} están bien. Revisa los que quedaron en rojo.` };
+    };
+    R.reveal = () => { for (let i = 0; i < n; i++){ resp[i] = r.items[i][1]; fijo.add(i); } mal.clear(); pintar(); };
+  },
+
+  num(z, r){
+    z.innerHTML = `<label class="num"><input id="numIn" type="text" inputmode="decimal" autocomplete="off" aria-label="Tu respuesta"><span>${r.unidad}</span></label>`;
+    const inp = $('#numIn', z);
+    inp.onkeydown = e => { if (e.key === 'Enter'){ e.preventDefault(); revisar(); } };
+    inp.oninput = () => inp.classList.remove('mal');
+    inp.focus();
+    R.check = () => {
+      const v = inp.value.trim().replace(/\s/g, '').replace(',', '.');
+      if (v === '' || isNaN(Number(v))){ info('Escribe un número antes de revisar (puedes usar coma para los decimales).'); return null; }
+      if (Math.abs(Number(v) - r.ok) <= (r.tol || 0)){ inp.classList.add('bien'); return { ok:true }; }
+      inp.classList.add('mal'); return { ok:false };
+    };
+    R.retry = () => inp.select();
+    R.reveal = () => { inp.value = String(r.ok).replace('.', ','); inp.classList.remove('mal'); inp.classList.add('bien'); };
+  },
+
+  build(z, r){
+    const GR = r.grupos, sel = {};
+    GR.forEach(([k]) => { sel[k] = null; });
+    let estReq = null;
+    const total = () => r.base + GR.reduce((s, [k]) => s + (sel[k] != null ? CAT[k][sel[k]].p : 0), 0);
+    const piezas = () => { const s = { total:total() }; GR.forEach(([k]) => { s[k] = CAT[k][sel[k]]; }); return s; };
+    function pintar(){
+      const t = total(), sobra = r.presupuesto - t;
+      z.innerHTML = `<div class="build">
+        <div>${GR.map(([k, lab]) => `<fieldset class="grupo"><legend>${lab}</legend><div class="cards">${CAT[k].map((o, i) =>
+          `<button class="pieza ${sel[k] === i ? 'sel' : ''}" data-k="${k}" data-i="${i}" aria-pressed="${sel[k] === i}"><b>${o.n}</b>${o.d ? `<small>${o.d}</small>` : ''}<span class="precio">${money(o.p)}</span></button>`).join('')}</div></fieldset>`).join('')}</div>
+        <aside class="resumen" aria-live="polite"><h3>Orden de trabajo</h3>
+          <div class="linea"><span>${r.baseTxt}</span><b>${money(r.base)}</b></div>
+          ${GR.map(([k, lab]) => `<div class="linea"><span>${lab}: ${sel[k] != null ? CAT[k][sel[k]].n : 'sin elegir'}</span><b>${sel[k] != null ? money(CAT[k][sel[k]].p) : '—'}</b></div>`).join('')}
+          <div class="linea total ${sobra < 0 ? 'pasado' : ''}"><span>Total</span><b>${money(t)}</b></div>
+          <div class="linea"><span>Presupuesto del cliente</span><b>${money(r.presupuesto)}</b></div>
+          <div class="linea ${sobra < 0 ? 'pasado' : ''}"><span>${sobra < 0 ? 'Te pasaste por' : 'Le sobra'}</span><b>${money(Math.abs(sobra))}</b></div>
+          <h4>Lo que pide ${esc(r.cli.nombre)}</h4>
+          <ul class="reqs">${r.reqs.map((q, qi) => `<li class="${estReq ? (estReq[qi] ? 'ok' : 'no') : ''}">${q.t}</li>`).join('')}</ul>
+        </aside></div>`;
+      $$('.pieza', z).forEach(b => b.onclick = () => {
+        if (R.done) return; SFX.tap(); sel[b.dataset.k] = +b.dataset.i; estReq = null; pintar();
+        const f = $(`.pieza[data-k="${b.dataset.k}"][data-i="${b.dataset.i}"]`, z); if (f) f.focus();
+      });
+    }
+    pintar();
+    R.check = () => {
+      if (GR.some(([k]) => sel[k] == null)){ info('Elige una opción en cada sección del catálogo antes de entregar.'); return null; }
+      const s = piezas(); estReq = r.reqs.map(q => q.f(s)); pintar();
+      const b = estReq.filter(Boolean).length;
+      return b === r.reqs.length ? { ok:true } : { ok:false, msg:`El pedido cumple ${b} de ${r.reqs.length} cosas que pidió ${r.cli.nombre}. Mira la lista en la orden de trabajo.` };
+    };
+    R.reveal = () => { Object.assign(sel, r.solSel); const s = piezas(); estReq = r.reqs.map(q => q.f(s)); pintar(); };
+  }
+};
+
+/* ---------- Fin de misión ---------- */
+function renderCierre(mi){
+  const m = MIS[mi], max = m.retos.length * PTS[0];
+  const pts = m.retos.reduce((s, r) => s + ((S.res[r.id] || {}).p || 0), 0);
+  const bien = m.retos.filter(r => (S.res[r.id] || {}).ok).length;
+  const ultima = mi === MIS.length - 1, todo = !posActual();
+  pantalla(hud() + `<main class="wrap">${barMision(mi, -1)}
+    <section class="escena"><div>${avatar(m.cli)}</div>
+      <div class="burbuja"><div class="quien">${esc(m.cli.nombre)}</div><p>${m.gracias}</p></div></section>
+    <div class="stats">
+      <div class="stat"><b>${bien} de ${m.retos.length}</b><span>retos resueltos bien</span></div>
+      <div class="stat"><b>${money(pts)}</b><span>ganados de ${money(max)} posibles</span></div>
+    </div>
+    <div class="acciones">
+      <button class="btn" id="btnVolver">Volver a la tienda</button>
+      ${ultima || todo ? '<button class="btn pri" id="btnFinal">Ver mi resultado final</button>' : `<button class="btn pri" id="btnSig">Siguiente misión: ${esc(MIS[mi + 1].titulo)}</button>`}
+    </div></main>`);
+  bindHud(); bindBar();
+  SFX.win();
+  $('#btnVolver').onclick = renderHub;
+  const f = $('#btnFinal'), s = $('#btnSig');
+  if (f){ f.onclick = renderFinal; f.focus(); }
+  if (s){ s.onclick = () => abrirMision(mi + 1); s.focus(); }
+}
+
+/* ---------- Resultado final ---------- */
+function renderFinal(){
+  const sal = monedas(), n = nota(), t = NOTAS.find(x => x.n === n);
+  pantalla(hud() + `<main class="wrap">
+    <section class="cert">
+      <h1>Tienda de notas</h1>
+      <p style="color:var(--mu)">${esc(S.nombre)}, terminaste tu contrato en TecnoTienda Pro. Con tu salario puedes comprar la mejor nota que te alcance.</p>
+      <div class="stats">
+        <div class="stat"><b>${money(ganadas())}</b><span>salario ganado</span></div>
+        ${S.penal ? `<div class="stat"><b>−${money(S.penal)}</b><span>descuentos por ${S.faltas} ${S.faltas === 1 ? 'salida' : 'salidas'}</span></div>` : ''}
+        <div class="stat"><b>${money(sal)}</b><span>disponible para comprar</span></div>
+      </div>
+      <div class="precios">${NOTAS.map(x => `<div class="precio-nota ${sal >= x.precio ? 'alcanza' : ''} ${t && x.n === n ? 'mejor' : ''}"><b>${fmtNota(x.n)}</b><span>${money(x.precio)}</span></div>`).join('')}</div>
+      <div id="compra" class="acciones" style="justify-content:center">${t
+        ? `<button class="btn pri" id="btnComprar">Comprar mi ${fmtNota(n)} por ${money(t.precio)}</button>`
+        : `<p class="aviso">Tu salario no alcanza para el 3,0, que cuesta ${money(NOTAS[NOTAS.length - 1].precio)}.</p><button class="btn pri" id="btnComprar">Ver mi nota</button>`}</div>
+      <div id="factura"></div>
+    </section>
+    <div class="acciones" style="justify-content:center"><button class="btn" id="btnVolver">Volver a la tienda</button></div></main>`);
+  bindHud();
+  $('#btnVolver').onclick = renderHub;
+  $('#btnComprar').onclick = () => {
+    SFX.win();
+    $('#compra').remove();
+    $('#factura').innerHTML = `
+      <div class="nombre">${esc(S.nombre)}</div><div style="color:var(--mu)">${esc(S.curso)}</div>
+      <div class="nota" aria-label="Nota ${notaTxt()}">${notaTxt()}</div>
+      <div class="rango">${t ? 'Nota comprada. ' : 'No alcanzó para aprobar. '}${rango(n)}</div>
+      ${t ? `<p style="color:var(--mu)">Pagaste ${money(t.precio)}. Te sobran ${money(sal - t.precio)}.</p>` : ''}
+      <div class="stats"><div class="stat"><b>${correctos()} de ${TOTAL}</b><span>retos resueltos bien</span></div></div>
+      <div class="tabla-wrap"><table class="tabla"><thead><tr><th>Misión</th><th>Bien</th><th>Salario</th></tr></thead><tbody>
+        ${MIS.map((m, mi) => `<tr><td>${mi + 1}. ${esc(m.titulo)}</td><td>${m.retos.filter(r => (S.res[r.id] || {}).ok).length} de ${m.retos.length}</td><td>${money(m.retos.reduce((s2, r) => s2 + ((S.res[r.id] || {}).p || 0), 0))}</td></tr>`).join('')}
+      </tbody></table></div>`;
+  };
+}
+
+/* ---------- Vigilancia ---------- */
+let lejos = null;
+const vigilando = () => VIG.activa && !!S.user && !S.pausaVig && posActual() !== null;
+function seFue(){ if (lejos === null && vigilando()) lejos = Date.now(); }
+function volvio(){
+  if (lejos === null || document.visibilityState !== 'visible' || !document.hasFocus()) return;
+  const seg = (Date.now() - lejos) / 1000; lejos = null;
+  if (seg >= VIG.segundosMinimos && vigilando()) registrarSalida(seg);
+}
+document.addEventListener('visibilitychange', () => { if (document.hidden) seFue(); else volvio(); });
+window.addEventListener('blur', seFue);
+window.addEventListener('focus', volvio);
+
+function registrarSalida(seg){
+  S.faltas++; S.racha++; S.penal += VIG.penalMonedas;
+  if (S.racha >= VIG.maxSalidas) S.bloq = true;
+  S.pend.push({ mision:'Vigilancia', reto:'', resultado:`Salió de la actividad (${Math.round(seg)} s)${S.bloq ? ' y quedó bloqueada' : ''}`, intentos:S.faltas, monedas:-VIG.penalMonedas, fecha:new Date().toISOString() });
+  S.ver++; guardar();
+  const c = $('#coins'); if (c) c.textContent = money(monedas());
+  const h = $('#hudSal'); if (h){ h.textContent = `Salidas: ${S.faltas}`; h.classList.add('alerta'); }
+  SFX.bad();
+  mostrarBloqueo(seg);
+}
+
+function mostrarBloqueo(seg){
+  let o = $('#bloqueo');
+  if (!o){ o = document.createElement('div'); o.id = 'bloqueo'; o.setAttribute('role', 'alertdialog'); o.setAttribute('aria-modal', 'true'); document.body.appendChild(o); }
+  clearInterval(S.bloqT);
+  if (S.bloq){
+    o.innerHTML = `<div class="bloq-card"><div class="bloq-ico">!</div><h2>Actividad bloqueada</h2>
+      <p>Saliste de la actividad ${S.faltas} ${S.faltas === 1 ? 'vez' : 'veces'}. Quedó registrado en la hoja de la profe.</p>
+      <p>Llama a la profe para que la desbloquee.</p>
+      <input id="clProfe" type="password" inputmode="numeric" autocomplete="off" aria-label="Clave de la profe" placeholder="Clave de la profe">
+      <p class="bloq-msg" id="bmsg" role="status"></p>
+      <button class="btn pri" id="btnDesb">Desbloquear</button></div>`;
+    const inp = $('#clProfe'), ok = () => {
+      if (inp.value.trim() !== VIG.claveProfe){ $('#bmsg').textContent = 'Clave incorrecta.'; inp.select(); return; }
+      S.bloq = false; S.racha = 0;
+      S.pend.push({ mision:'Vigilancia', reto:'', resultado:'Desbloqueada por la profe', intentos:S.faltas, monedas:0, fecha:new Date().toISOString() });
+      S.ver++; guardar(); o.remove();
+    };
+    $('#btnDesb').onclick = ok;
+    inp.onkeydown = e => { if (e.key === 'Enter'){ e.preventDefault(); ok(); } };
+    inp.focus();
+    return;
+  }
+  let t = VIG.esperaSeg;
+  o.innerHTML = `<div class="bloq-card"><div class="bloq-ico">!</div><h2>Saliste de la actividad</h2>
+    <p>Estuviste fuera ${Math.round(seg)} segundos. Quedó registrado en la hoja de la profe y te descontaron <b>${money(VIG.penalMonedas)}</b> del salario.</p>
+    <p>Salidas: <b>${S.racha} de ${VIG.maxSalidas}</b>. Al llegar a ${VIG.maxSalidas}, la actividad se bloquea.</p>
+    <button class="btn pri" id="btnVolverAct" disabled>Podrás seguir en ${t} s</button></div>`;
+  const b = $('#btnVolverAct');
+  S.bloqT = setInterval(() => {
+    t--;
+    if (t > 0){ b.textContent = `Podrás seguir en ${t} s`; return; }
+    clearInterval(S.bloqT); b.disabled = false; b.textContent = 'Volver a la actividad'; b.focus();
+  }, 1000);
+  b.onclick = () => o.remove();
+}
+
+renderLogin();
+</script>
+</body>
+</html>
